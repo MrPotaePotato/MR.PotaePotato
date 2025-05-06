@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr Potae Potato Website </title>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Global Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/Background_MPP.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* ทำให้ภาพพื้นหลังไม่ขยับ */
+            color: #217783;
+        }
+
+        header {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .menu li a {
+            font-family: "Silkscreen", sans-serif;
+            text-decoration: none;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .menu li a:hover {
+            color: #5EFF00;
+        }
+
+        section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 0 12px rgba(102, 100, 100, 0.5);
+            background-color: rgba(255, 255, 255, 0.8);
+            max-width: 900px;
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+        }
+
+        .container.in-view {
+            opacity: 1;
+        }
+
+        .silkscreen-header {
+            font-family: "Silkscreen", sans-serif;
+            font-size: 3em;
+            color:#000000;
+            text-shadow: 0 0 10px #5EFF00, 0 0 20px #00FFB3, 0 0 40px #0099FF, 0 0 80px #006EFF;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .silkscreen-text {
+            font-family: "Silkscreen", sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 0.8em;
+        }
+
+        .social-media-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 100px;
+        }
+
+        .social-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .social-item img {
+            width: 60px;
+            height: 50px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+
+        .social-item a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1em;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .social-item a:hover {
+            color: #ff4500;
+        }
+
+        @media (max-width: 768px) {
+            .silkscreen-header {
+                font-size: 5em;
+            }
+
+            .container {
+                max-width: 90%;
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            footer {
+                font-size: 0.8em;
+            }
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            position: relative;
+            background: url('images/Background_MPP.png') no-repeat center center;
+            background-attachment: fixed;
+            background-size: cover;
+            height: 100vh;
+            z-index: -1;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="#">
+                    <img src="images/Mr.PotaePotato_Logo.png" alt="Mr.PotaePotato Logo">
+                </a>
+            </div>
+            <nav aria-label="Main navigation">
+                <ul class="menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#links">Links</a></li>
+                    <li><a href="#Other links">Other links</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="parallax">
+        <h1 class="silkscreen-header">Welcome to My Links Center!</h1>
+    </section>
+
+    <section id="about">
+        <div class="container fade">
+            <h2 class="silkscreen-text">About</h2>
+            <p>-</p>
+        </div>
+    </section>
+
+    <section id="links"> 
+        <div class="container fade">
+            <p class="silkscreen-text">🔗 Social Media Lists 🔗</p>
+            <div class="social-media-container">
+                <div class="social-item">
+                    <img src="images/youtube-icon.png" alt="YouTube">
+                    <a href="https://www.youtube.com/channel/UCoTf8ucUB41mpGcJRsSij_A" target="_blank">MR.PotaePotato</a>
+                </div>
+                <div class="social-item">
+                    <img src="images/twitter-icon-x.png" alt="X">
+                    <a href="https://x.com/Mr_Potae_Potato" target="_blank">@Mr.Potae.Potato</a>
+                </div>
+                <div class="social-item">
+                    <img src="images/tikok-icon.png" alt="TikTok">
+                    <a href="https://www.tiktok.com/@mr.potato.potae" target="_blank">@mr.potato.potae</a>
+                </div>
+                <div class="social-item">
+                    <img src="images/discord-icon.png" alt="Discord">
+                    <a href="https://discord.gg/ePxyHTEP9q" target="_blank">{🥔 ᴘᴏᴛᴀᴇᴘᴏᴛᴀᴛᴏ ᴄɪᴛʏ 🥔}</a>
+                </div>
+                <div class="social-item">
+                    <img src="/images/tipme-logo.png" alt="Tipme">
+                    <a href="https://tipme.in.th/potaepotato" target="_blank">Tipme PotaePotato</a>
+                </div>
+                <div class="social-item">
+                    <img src="images/EasyDonate.png" alt="EasyDonate">
+                    <a href="https://easydonate.app/MrPotaePotato" target="_blank">EasyDonate MrPotaePotato</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="Other links">
+        <div class="container fade">
+            <p class="silkscreen-text">🔗 Other Social Media List 🔗</p>
+            <div class="social-media-container">
+                <div class="social-item">
+                    <img src="images/discord-icon.png" alt="Discord">
+                    <a href="https://zmtbs.online" target="_blank">🛌 ZMTBS Community 🛌</a>
+                </div>
+                
+                <div class="social-item">
+                    <img src="images/discord-icon.png" alt="Discord">
+                    <a href="https://discord.gg/BujJAHsuTF" target="_blank">🌙 Peaceful Heaven of zP4xwt ☁</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <section id="contact">
+        <div class="container fade">
+            <h2 class="silkscreen-text">Contact</h2>
+            <a> ติดต่อได้ที่ : potae1898@gmail.com</a>
+        </div>
+    </section>
+
+    <footer>
+        Mr.PP Copyright © 2025. All rights reserved.
+    </footer>
+
+    <script>
+        // Select all elements with the 'fade' class
+        const elements = document.querySelectorAll('.fade');
+
+        // Options for the Intersection Observer
+        const observerOptions = {
+            threshold: 0.5,  // Trigger when 50% of the element is visible
+        };
+
+        // Create an Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                // When the element is in view
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');  // Add the 'in-view' class to fade it in
+                } else {
+                    entry.target.classList.remove('in-view');  // Remove the 'in-view' class to fade it out
+                }
+            });
+        }, observerOptions);
+
+        // Observe each element
+        elements.forEach((element) => {
+            observer.observe(element);  // Start observing each element with the 'fade' class
+        });
+    </script>
+</body>
+</html>
