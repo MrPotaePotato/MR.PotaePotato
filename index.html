@@ -6,509 +6,651 @@
     <title>Mr Potae Potato</title>
     <style>
         /* === Import Local Fonts === */
-        
         @font-face {
             font-family: 'Anakotmai';
             src: url('fonts/Anakotmai-Light.ttf') format('truetype');
             font-weight: 300;
-            font-style: normal;
         }
         @font-face {
             font-family: 'Anakotmai';
             src: url('fonts/Anakotmai-Medium.ttf') format('truetype');
             font-weight: 500;
-            font-style: normal;
         }
         @font-face {
             font-family: 'Anakotmai';
             src: url('fonts/Anakotmai-Bold.ttf') format('truetype');
             font-weight: 700;
-            font-style: normal;
         }
-
         @font-face {
             font-family: 'MinecraftTen';
             src: url('fonts/Minecraft-TenTH.ttf') format('truetype');
             font-weight: normal;
-            font-style: normal;
         }
         @font-face {
             font-family: 'MinecraftFive';
             src: url('fonts/Minecraft-Five-48bb31479b149c60fce1.otf') format('opentype');
             font-weight: normal;
-            font-style: normal;
+        }
+
+        /* === CSS Variables === */
+        :root {
+            --green-dark:   #0d6e40;
+            --green-main:   #10804c;
+            --green-light:  #1ed760;
+            --green-glow:   rgba(16, 128, 76, 0.25);
+            --white-glass:  rgba(255, 255, 255, 0.70);
+            --white-card:   rgba(255, 255, 255, 0.85);
+            --shadow-soft:  0 8px 32px rgba(0, 0, 0, 0.10);
+            --shadow-card:  0 4px 16px rgba(0, 0, 0, 0.08);
+            --radius-xl:    28px;
+            --radius-lg:    20px;
+            --radius-md:    14px;
+            --radius-pill:  999px;
         }
 
         /* === Custom Scrollbar === */
-        ::-webkit-scrollbar {
-            width: 6px; /* ลดขนาดลงนิดนึงให้เหมาะกับทั้ง PC และ Mobile */
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1); 
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(16, 128, 76, 0.5); 
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(16, 128, 76, 0.8); 
-        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(16,128,76,0.4); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(16,128,76,0.7); }
 
-        /* === Reset & Setup === */
-        * {
-            margin: 0;
-            padding: 0;
+        /* === Reset === */
+        *, *::before, *::after {
+            margin: 0; padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* เอาไฮไลท์สีฟ้าตอนกดมือถือออก */
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
-            /* ใช้ dvh เพื่อแก้ปัญหาแถบ URL มือถือบังเนื้อหา */
             height: 100vh;
-            height: 100dvh; 
+            height: 100dvh;
             overflow: hidden;
-            font-family: 'Anakotmai', sans-serif; 
+            font-family: 'Anakotmai', sans-serif;
             font-weight: 500;
             background-image: url('images/Background_MPP.png');
             background-size: cover;
             background-position: center;
         }
 
+        /* === Glass Overlay === */
         .glass-overlay {
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.35); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px); /* สำหรับ Safari บน iPhone */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: rgba(240, 255, 247, 0.38);
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
         }
 
-        /* === Header & Navigation === */
+        /* ===========================
+           HEADER
+        =========================== */
         header {
-            padding: 20px 40px;
+            padding: 18px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
+            /* เส้นใต้ header แบบ subtle */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255,255,255,0.20);
         }
 
+        .logo a { display: flex; align-items: center; }
         .logo img {
-            height: 60px;
+            height: 56px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); 
         }
+        .logo img:hover { transform: scale(1.1) rotate(-4deg); }
 
-        .logo img:hover {
-            transform: scale(1.1) rotate(-3deg); 
-        }
-
+        /* Nav */
         nav ul {
             list-style: none;
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap; /* ให้เมนูขึ้นบรรทัดใหม่ได้ถ้าที่กว้างไม่พอ */
+            gap: 10px;
+            flex-wrap: wrap;
             justify-content: center;
         }
 
         nav button {
             font-family: 'MinecraftFive', sans-serif;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid transparent;
-            font-size: 1.1em;
-            color: #333;
+            font-size: 0.95em;
+            color: #2a5a3a;
+            background: rgba(255, 255, 255, 0.55);
+            border: 1.5px solid rgba(255,255,255,0.7);
+            padding: 9px 22px;
+            border-radius: var(--radius-pill);
             cursor: pointer;
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            transition: all 0.25s ease;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            white-space: nowrap;
         }
-
         nav button:hover {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255,255,255,0.90);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
-
         nav button.active {
-            background: #10804c;
+            background: var(--green-main);
             color: #fff;
-            border: 1px solid #1ed760;
-            box-shadow: 0 4px 15px rgba(16, 128, 76, 0.4);
-            transform: scale(1.05);
+            border-color: var(--green-light);
+            box-shadow: 0 4px 18px var(--green-glow);
+            transform: translateY(-1px) scale(1.04);
         }
 
-        /* === Main Content Area === */
+        /* ===========================
+           MAIN & CONTENT BOX
+        =========================== */
         main {
-            flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            overflow: hidden; /* ป้องกันไม่ให้ทะลุจอ */
+            padding: 24px 20px;
+            overflow: hidden;
+        }
+
+        /* wrapper ทำหน้าที่ควบคุมขนาดสูงสุด */
+        .content-wrapper {
+            width: 100%;
+            max-width: 760px;
+            max-height: 100%;
+            position: relative;
         }
 
         .content-box {
-            background: rgba(255, 255, 255, 0.75);
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255,255,255,0.5);
-            max-width: 800px;
+            background: var(--white-glass);
+            padding: 40px 44px;
+            border-radius: var(--radius-xl);
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.9);
             width: 100%;
-            max-height: 100%; /* ไม่ให้กล่องสูงเกิน main */
-            overflow-y: auto; /* ให้เลื่อนสกอร์ในกล่องได้ */
+            max-height: calc(100dvh - 200px);
+            overflow-y: auto;
             text-align: center;
-            display: none; 
-            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+            /* ซ่อน/แสดงด้วย opacity + pointer-events แทน display:none
+               ทำให้ animation trigger ทุกครั้งที่ active */
+            opacity: 0;
+            transform: translateY(18px) scale(0.97);
+            pointer-events: none;
+            position: absolute;
+            top: 0; left: 0;
+            transition: none;
         }
 
         .content-box.active {
-            display: block; 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            position: relative;
+            animation: popIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes popIn {
-            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+            0%   { opacity: 0; transform: translateY(18px) scale(0.97); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
+        /* ===========================
+           SECTION TITLE
+        =========================== */
         h2.section-title {
             font-family: 'MinecraftTen', sans-serif;
-            font-size: 2.8em;
-            margin-bottom: 30px;
+            font-size: 2.4em;
             font-weight: normal;
-            background: linear-gradient(45deg, #10804c, #21bf73, #10804c, #0d5c36);
-            background-size: 300% 300%;
-            color: transparent;
+            margin-bottom: 28px;
+            line-height: 1.25;
+            background: linear-gradient(120deg, var(--green-dark), #21bf73, var(--green-dark));
+            background-size: 250% 250%;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: gradientMove 5s ease infinite;
-            filter: drop-shadow(0 2px 4px rgba(16,128,76,0.2));
-            line-height: 1.2;
+            color: transparent;
+            animation: gradientMove 6s ease infinite;
+            filter: drop-shadow(0 2px 6px rgba(16,128,76,0.18));
         }
-
         @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* === Social Media Grid === */
+        /* ===========================
+           SOCIAL GRID
+        =========================== */
         .social-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .social-item {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0,0,0,0.05);
-            padding: 12px 25px;
-            border-radius: 50px;
+            background: var(--white-card);
+            border: 1.5px solid rgba(255,255,255,0.9);
+            padding: 13px 26px;
+            border-radius: var(--radius-pill);
             display: flex;
             align-items: center;
-            justify-content: center; /* เผื่อตอนขยายเต็มบนมือถือ */
-            gap: 12px;
+            justify-content: center;
+            gap: 11px;
             text-decoration: none;
-            color: #444;
-            font-size: 1.2em;
-            font-weight: 700; 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            color: #3a3a3a;
+            font-size: 1.1em;
+            font-weight: 700;
+            box-shadow: var(--shadow-card);
+            transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
         .social-item:hover {
             transform: translateY(-5px);
             background: #fff;
-            border-color: #10804c;
-            color: #10804c;
-            box-shadow: 0 10px 20px rgba(16, 128, 76, 0.15);
+            border-color: var(--green-main);
+            color: var(--green-main);
+            box-shadow: 0 12px 28px var(--green-glow);
         }
-
         .social-item img {
             width: 26px;
             height: 26px;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
+        .social-item:hover img { transform: scale(1.2) rotate(-5deg); }
 
-        .social-item:hover img {
-            transform: scale(1.2); 
+        /* ===========================
+           DIVIDER
+        =========================== */
+        .section-divider {
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green-main), var(--green-light));
+            border-radius: 99px;
+            margin: 0 auto 28px;
         }
 
-        /* === Minecraft Server Custom Elements === */
+        /* ===========================
+           SERVER INFO
+        =========================== */
+        .server-block {
+            background: rgba(255,255,255,0.6);
+            padding: 22px;
+            border-radius: var(--radius-lg);
+            border: 1.5px solid rgba(255,255,255,0.85);
+            box-shadow: var(--shadow-card);
+            margin-top: 24px;
+        }
+        .server-block h3 {
+            font-family: 'MinecraftTen', sans-serif;
+            font-size: 1.3em;
+            font-weight: normal;
+            color: var(--green-main);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .ip-card {
+            background: rgba(255,255,255,0.82);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            text-align: left;
+            border: 1px solid rgba(16,128,76,0.10);
+            transition: box-shadow 0.2s;
+        }
+        .ip-card:hover { box-shadow: 0 6px 20px var(--green-glow); }
+        .ip-card:last-child { margin-bottom: 0; }
+
+        .ip-card-title {
+            color: #8d2121;
+            font-size: 1.1em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .ip-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 1em;
+            color: #444;
+            margin-top: 6px;
+            padding-left: 4px;
+        }
+        .ip-row b { color: #555; }
+
+        /* Status Dot */
         .status-dot {
             display: inline-block;
-            width: 12px;
-            height: 12px;
-            background-color: #2ed573;
+            width: 10px;
+            height: 10px;
+            background: #2ed573;
             border-radius: 50%;
-            margin-right: 8px;
-            flex-shrink: 0; /* ไม่ให้จุดหดตัวบนมือถือ */
-            box-shadow: 0 0 10px #2ed573;
-            animation: pulse 1.5s infinite;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px #2ed573;
+            animation: pulse 1.8s infinite;
         }
-
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 213, 115, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+            0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46,213,115,0.7); }
+            70%  { transform: scale(1);    box-shadow: 0 0 0 8px rgba(46,213,115,0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46,213,115,0); }
         }
 
-        .copy-able {
-            background: #eee;
-            padding: 2px 8px;
-            border-radius: 5px;
-            cursor: pointer;
+        /* Copy-able */
+        .copy-wrap {
             position: relative;
-            user-select: all; 
-            font-weight: bold;
-            word-break: break-word; /* ป้องกัน IP ยาวทะลุจอ */
-            display: inline-block; /* ช่วยให้ Tooltip จัดตำแหน่งง่ายขึ้น */
+            display: inline-flex;
+            align-items: center;
         }
-        .copy-able:active {
-            background: #ddd; /* ตอนใช้นิ้วกดให้แสดงสีทึบลง */
+        .copy-able {
+            background: rgba(16,128,76,0.10);
+            color: var(--green-dark);
+            padding: 3px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Anakotmai', monospace;
+            word-break: break-all;
+            transition: background 0.2s;
+            border: 1px solid rgba(16,128,76,0.15);
         }
+        .copy-able:hover  { background: rgba(16,128,76,0.18); }
+        .copy-able:active { background: rgba(16,128,76,0.28); }
+
         .copy-tooltip {
             visibility: hidden;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 10px;
-            position: absolute;
-            z-index: 2;
-            bottom: 125%; 
-            left: 50%;
-            transform: translateX(-50%); /* จัดกึ่งกลางแบบยืดหยุ่นกว่า margin-left */
             opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.8em;
+            background: #1a1a1a;
+            color: #fff;
             font-family: 'Anakotmai', sans-serif;
-            white-space: nowrap; /* ไม่ให้ข้อความใน Tooltip ตัดบรรทัด */
+            font-size: 0.78em;
+            white-space: nowrap;
+            padding: 5px 11px;
+            border-radius: 8px;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 10;
         }
         .copy-tooltip::after {
-            content: "";
+            content: '';
             position: absolute;
-            top: 100%; 
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
+            top: 100%; left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #1a1a1a;
         }
-        .copy-tooltip.show {
-            visibility: visible;
-            opacity: 1;
-        }
+        .copy-tooltip.show { visibility: visible; opacity: 1; }
 
-        /* === Contact Info === */
-        .contact-info p {
-            font-size: 1.5em;
-            color: #555;
-            margin: 10px 0;
-            background: rgba(255,255,255,0.5);
-            padding: 15px;
-            border-radius: 15px;
-            display: inline-block;
-            word-break: break-word; /* ป้องกันอีเมลยาวล้นจอ */
-            max-width: 100%;
-        }
-        
-        .contact-info .highlight {
-            color: #d63031;
+        .server-note {
+            font-size: 0.82em;
+            color: #999;
+            margin-top: 18px;
             font-weight: 700;
-            margin-top: 20px;
-            font-size: 1.2em;
-            border-left: 4px solid #d63031;
-            background: rgba(214, 48, 49, 0.1);
         }
 
-        /* === Footer === */
+        /* Bedrock list */
+        .bedrock-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .bedrock-list li {
+            font-size: 0.97em;
+            color: #444;
+            padding-left: 4px;
+            line-height: 1.6;
+        }
+
+        /* ===========================
+           CONTACT
+        =========================== */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+        .contact-info p {
+            font-size: 1.35em;
+            color: #444;
+            background: rgba(255,255,255,0.70);
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid rgba(255,255,255,0.9);
+            box-shadow: var(--shadow-card);
+            word-break: break-word;
+            max-width: 100%;
+            width: 100%;
+        }
+        .contact-info .highlight {
+            color: #c0392b;
+            font-weight: 700;
+            font-size: 1.05em;
+            border-left: 4px solid #e74c3c;
+            background: rgba(231, 76, 60, 0.08);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            text-align: left;
+        }
+
+        /* ===========================
+           FOOTER
+        =========================== */
         footer {
             text-align: center;
-            padding: 15px;
-            color: #333;
-            font-size: 0.9em;
+            padding: 14px 20px;
+            color: #2a4a35;
+            font-size: 0.85em;
             font-weight: 500;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.18);
+            line-height: 1.8;
         }
-
         footer a {
-            color: #10804c;
+            color: var(--green-main);
             text-decoration: none;
             font-weight: 700;
-            transition: opacity 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.2s;
         }
+        footer a:hover { opacity: 0.75; }
+        footer a img { vertical-align: middle; height: 15px; }
 
-        /* === MOBILE RESPONSIVE (ปรับแต่งเฉพาะมือถือและแท็บเล็ต) === */
+        /* ===========================
+           MOBILE RESPONSIVE
+        =========================== */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 15px;
-                padding: 15px 20px;
+                gap: 12px;
+                padding: 14px 16px;
             }
-            .logo img {
-                height: 50px; /* ย่อโลโก้ลงนิดหน่อยให้มีพื้นที่ */
-            }
-            nav ul {
-                gap: 8px;
-            }
+            .logo img { height: 46px; }
+            nav ul { gap: 7px; }
             nav button {
-                font-size: 0.9em;
-                padding: 8px 15px;
+                font-size: 0.82em;
+                padding: 8px 14px;
             }
-            
-            main {
-                padding: 10px 15px;
-                align-items: flex-start; /* ดันกล่องขึ้นไปด้านบนนิดนึง */
-            }
-            
+            main { padding: 12px 14px; }
             .content-box {
-                padding: 25px 20px;
-                border-radius: 20px;
-                /* คำนวณความสูงไม่ให้โดน Header/Footer บัง */
-                max-height: calc(100dvh - 180px); 
+                padding: 24px 18px;
+                border-radius: var(--radius-lg);
+                max-height: calc(100dvh - 195px);
             }
-            
             h2.section-title {
-                font-size: 2em;
-                margin-bottom: 20px;
+                font-size: 1.8em;
+                margin-bottom: 18px;
             }
-            
-            /* ปรับปุ่มให้เต็มหน้าจอบนมือถือ (กดง่ายขึ้น) */
             .social-grid {
                 flex-direction: column;
                 align-items: stretch;
             }
             .social-item {
-                font-size: 1.1em;
-                padding: 15px 20px;
-            }
-            
-            /* ปรับกล่อง Server ให้พอดี */
-            .server-info {
-                padding: 15px !important;
-            }
-            .server-info h3 {
-                font-size: 1.3em !important;
-            }
-            .server-info ul {
-                padding-left: 20px !important;
-            }
-            
-            .contact-info p {
-                font-size: 1.2em;
-                padding: 12px;
-            }
-            .contact-info .highlight {
                 font-size: 1em;
+                padding: 14px 18px;
+                border-radius: var(--radius-lg);
             }
+            .server-block { padding: 16px; }
+            .server-block h3 { font-size: 1.1em; }
+            .contact-info p { font-size: 1.1em; padding: 12px 16px; }
         }
     </style>
 </head>
 <body>
     <div class="glass-overlay">
-        
+
         <header>
             <div class="logo">
                 <a href="#"><img src="images/Mr_PotaePotato_Lo.png" alt="Mr.PotaePotato Logo"></a>
             </div>
             <nav>
                 <ul id="nav-menu">
-                    <li><button onclick="switchTab(event, 'links')" class="active">Links</button></li>
-                    <li><button onclick="switchTab(event, 'support')">Support</button></li>
-                    <li><button onclick="switchTab(event, 'other-links')">MY Minecraft Server</button></li>
-                    <li><button onclick="switchTab(event, 'contact')">Contact</button></li>
+                    <li><button onclick="switchTab(event,'links')" class="active">Links</button></li>
+                    <li><button onclick="switchTab(event,'support')">Support</button></li>
+                    <li><button onclick="switchTab(event,'other-links')">MY Minecraft Server</button></li>
+                    <li><button onclick="switchTab(event,'contact')">Contact</button></li>
                 </ul>
             </nav>
         </header>
 
         <main>
-            <div id="links" class="content-box active">
-                <h2 class="section-title">Social Media</h2>
-                <div class="social-grid">
-                    <a href="https://www.youtube.com/channel/UCoTf8ucUB41mpGcJRsSij_A" target="_blank" class="social-item">
-                        <img src="images/youtube_icon.png" alt="YouTube"> MR.PotaePotato
-                    </a>
-                    <a href="https://www.tiktok.com/@mr.potato.potae" target="_blank" class="social-item">
-                        <img src="images/tikok_icon.png" alt="TikTok"> MR.Potato.Potae
-                    </a>
-                    <a href="https://discord.gg/ePxyHTEP9q" target="_blank" class="social-item">
-                        <img src="images/discord_icon.png" alt="Discord"> Potaepotato City
-                    </a>
-                </div>
-            </div>
+            <div class="content-wrapper">
 
-            <div id="support" class="content-box">
-                <h2 class="section-title">Support & Donate</h2>
-                <div class="social-grid">
-                    <a href="https://tipme.in.th/potaepotato" target="_blank" class="social-item">
-                        <img src="/images/tipme_logo.png" alt="Tipme"> Tipme PotaePotato
-                    </a>
-                    <a href="https://easydonate.app/MrPotaePotato" target="_blank" class="social-item">
-                        <img src="images/EasyDonate.png" alt="EasyDonate"> EasyDonate MrPotaePotato
-                    </a>
-                </div>
-            </div>
-
-            <div id="other-links" class="content-box">
-                <h2 class="section-title">Minecraft Server</h2>
-                
-                <div class="social-grid" style="margin-bottom: 25px;">
-                    <a href="https://discord.gg/FQStHyrHsC" target="_blank" class="social-item">
-                        <img src="images/discord_icon.png" alt="Discord"> [Gen 6] 🌸 ZMTBS Community 🌸
-                    </a>
-                    <a href="https://zmtbs.qzz.io/" target="_blank" class="social-item">
-                        🌎 Website Server
-                    </a>
+                <!-- === TAB: Links === -->
+                <div id="links" class="content-box active">
+                    <h2 class="section-title">Social Media</h2>
+                    <div class="section-divider"></div>
+                    <div class="social-grid">
+                        <a href="https://www.youtube.com/channel/UCoTf8ucUB41mpGcJRsSij_A" target="_blank" class="social-item">
+                            <img src="images/youtube_icon.png" alt="YouTube"> MR.PotaePotato
+                        </a>
+                        <a href="https://www.tiktok.com/@mr.potato.potae" target="_blank" class="social-item">
+                            <img src="images/tikok_icon.png" alt="TikTok"> MR.Potato.Potae
+                        </a>
+                        <a href="https://discord.gg/ePxyHTEP9q" target="_blank" class="social-item">
+                            <img src="images/discord_icon.png" alt="Discord"> ᴘᴏᴛᴀᴇᴘᴏᴛᴀᴛᴏ ᴄɪᴛʏ
+                        </a>
+                    </div>
                 </div>
 
-                <div class="server-info" style="background: rgba(255,255,255,0.6); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3 style="font-family: 'MinecraftTen', sans-serif; color: #10804c; margin-bottom: 15px; font-weight: normal; font-size: 1.5em;">IP Server สำหรับเข้าเล่น</h3>
-                    
-                    <div style="background: rgba(255,255,255,0.8); padding: 15px 20px; border-radius: 15px; margin-bottom: 15px; text-align: left; transition: transform 0.2s;">
-                        <strong style="color: #8d2121; font-size: 1.2em; display: flex; align-items: center;">
-                            <span class="status-dot"></span> ☕ Java Edition
-                        </strong>
-                        <p style="font-size: 1.1em; color: #333; margin-top: 8px; padding-left: 20px;">IP: <span id="java-ip" class="copy-able" onclick="copyIP('java-ip', 'java-tooltip')">zmtbs.qzz.io</span><span id="java-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span></p>
+                <!-- === TAB: Support === -->
+                <div id="support" class="content-box">
+                    <h2 class="section-title">Support &amp; Donate</h2>
+                    <div class="section-divider"></div>
+                    <div class="social-grid">
+                        <!-- BUG FIX: ลบ "/" นำหน้า path รูป tipme -->
+                        <a href="https://tipme.in.th/potaepotato" target="_blank" class="social-item">
+                            <img src="images/tipme_logo.png" alt="Tipme"> Tipme PotaePotato
+                        </a>
+                        <a href="https://easydonate.app/MrPotaePotato" target="_blank" class="social-item">
+                            <img src="images/EasyDonate.png" alt="EasyDonate"> EasyDonate MrPotaePotato
+                        </a>
+                    </div>
+                </div>
+
+                <!-- === TAB: Minecraft Server === -->
+                <div id="other-links" class="content-box">
+                    <h2 class="section-title">Minecraft Server</h2>
+                    <div class="section-divider"></div>
+
+                    <div class="social-grid" style="margin-bottom: 0;">
+                        <a href="https://discord.gg/FQStHyrHsC" target="_blank" class="social-item">
+                            <img src="images/discord_icon.png" alt="Discord"> [Gen 6] 🌸 ZMTBS Community 🌸
+                        </a>
+                        <a href="https://zmtbs.qzz.io/" target="_blank" class="social-item">
+                            🌎 Website Server
+                        </a>
                     </div>
 
-                    <div style="background: rgba(255,255,255,0.8); padding: 15px 20px; border-radius: 15px; text-align: left; transition: transform 0.2s;">
-                        <strong style="color: #8d2121; font-size: 1.2em; display: flex; align-items: center;">
-                            <span class="status-dot"></span> 📱 Bedrock Edition
-                        </strong>
-                        <ul style="list-style-type: disc; margin-top: 10px; padding-left: 40px; font-size: 1.1em; color: #444; line-height: 1.6;">
-                            <li><b>วิธีที่ 1 (เพิ่มเพื่อน):</b> แอดเพื่อน Xbox ชื่อ <b>ZMTBS</b> ในเกม รอสักครู่</li>
-                            <li style="margin-top: 8px;"><b>วิธีที่ 2 (ใส่ IP):</b> 
-                                <br>IP: <span id="bedrock-ip" class="copy-able" onclick="copyIP('bedrock-ip', 'bedrock-tooltip')">zmtbs.qzz.io</span><span id="bedrock-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span> 
-                                <br>Port: <span id="bedrock-port" class="copy-able" onclick="copyIP('bedrock-port', 'port-tooltip')">19132</span><span id="port-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <p style="font-size: 0.9em; color: #888; margin-top: 20px; text-align: center; font-weight: 700;">
-                        <small>Update ล่าสุด • 2/4/2569 12:00</small>
-                    </p>
-                </div>
-            </div>
+                    <div class="server-block">
+                        <h3>🖥️ IP Server สำหรับเข้าเล่น</h3>
 
-            <div id="contact" class="content-box">
-                <h2 class="section-title">Contact Me</h2>
-                <div class="contact-info">
-                    <p>📧 potae1898@gmail.com</p>
-                    <p class="highlight">** หมายเหตุ: ไม่รับงานที่เกี่ยวกับการทำเว็บไซต์หรือเว็บพนันครับ **</p>
+                        <!-- Java -->
+                        <div class="ip-card">
+                            <div class="ip-card-title">
+                                <span class="status-dot"></span> ☕ Java Edition
+                            </div>
+                            <div class="ip-row">
+                                <b>IP:</b>
+                                <div class="copy-wrap">
+                                    <span id="java-ip" class="copy-able" onclick="copyIP('java-ip','java-tooltip')">zmtbs.qzz.io</span>
+                                    <span id="java-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bedrock -->
+                        <div class="ip-card">
+                            <div class="ip-card-title">
+                                <span class="status-dot"></span> 📱 Bedrock Edition
+                            </div>
+                            <ul class="bedrock-list">
+                                <li>
+                                    <b>วิธีที่ 1 (เพิ่มเพื่อน):</b><br>
+                                    แอดเพื่อน Xbox ชื่อ 
+                                    <div class="copy-wrap" style="display: inline-block;">
+                                        <b id="xbox-name" class="copy-able" onclick="copyIP('xbox-name','xbox-tooltip')">ZMTBS</b>
+                                        <span id="xbox-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
+                                    </div>
+                                    ในเกม รอสักครู่
+                                </li>
+                                <li>
+                                    <b>วิธีที่ 2 (ใส่ IP):</b>
+                                    <div class="ip-row" style="margin-top:6px;">
+                                        <b>IP:</b>
+                                        <div class="copy-wrap">
+                                            <span id="bedrock-ip" class="copy-able" onclick="copyIP('bedrock-ip','bedrock-tooltip')">zmtbs.qzz.io</span>
+                                            <span id="bedrock-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
+                                        </div>
+                                    </div>
+                                    <div class="ip-row">
+                                        <b>Port:</b>
+                                        <div class="copy-wrap">
+                                            <span id="bedrock-port" class="copy-able" onclick="copyIP('bedrock-port','port-tooltip')">19132</span>
+                                            <span id="port-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p class="server-note">อัปเดตล่าสุด • 2/4/2569 12:00</p>
+                    </div>
                 </div>
+
+                <!-- === TAB: Contact === -->
+                <div id="contact" class="content-box">
+                    <h2 class="section-title">Contact Me</h2>
+                    <div class="section-divider"></div>
+                    <div class="contact-info">
+                        <p>📧 potae1898@gmail.com</p>
+                        <p class="highlight">** หมายเหตุ: ไม่รับงานที่เกี่ยวกับการทำเว็บไซต์หรือเว็บพนันครับ **</p>
+                    </div>
+                </div>
+
             </div>
         </main>
 
         <footer>
-            Mr.PP Copyright © 2026. All rights reserved. <br>
+            Mr.PP Copyright © 2026. All rights reserved.<br>
             <a href="#">
-                <img src="images/Mr_PotaePotato_Lo.png" alt="License Potato" style="vertical-align:middle; height: 16px; margin-right: 5px;"> 
+                <img src="images/Mr_PotaePotato_Lo.png" alt="License Potato">
                 License Potato
             </a>
         </footer>
@@ -516,100 +658,104 @@
     </div>
 
     <script>
-        // === Web Audio API สำหรับสร้างเสียง Effect ===
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
+        // ===========================
+        // BUG FIX: สร้าง AudioContext หลัง user interaction ครั้งแรก
+        // ===========================
+        let audioCtx = null;
+        function getAudioCtx() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
 
-        // 1. เสียง "ป๊อก" สำหรับปุ่มทั่วไป
         function playClickSound() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime); 
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.1);
+            const ctx = getAudioCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.25, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(); osc.stop(ctx.currentTime + 0.12);
         }
 
-        // 2. เสียง "ปิ๊ง" สำหรับกดก๊อปปี้ IP
         function playCopySound() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.type = 'triangle';
-            oscillator.frequency.setValueAtTime(900, audioCtx.currentTime);
-            oscillator.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); 
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.15);
+            const ctx = getAudioCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(880, ctx.currentTime);
+            osc.frequency.linearRampToValueAtTime(1200, ctx.currentTime + 0.12);
+            gain.gain.setValueAtTime(0.18, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(); osc.stop(ctx.currentTime + 0.18);
         }
 
-        // เพิ่ม Event เสียงให้ปุ่มโซเชียล
+        // เสียงปุ่มโซเชียล
         document.querySelectorAll('.social-item').forEach(item => {
             item.addEventListener('click', () => playClickSound());
         });
 
-        // === ฟังก์ชันสลับแท็บ ===
+        // ===========================
+        // BUG FIX: ใช้ opacity + animation re-trigger แทน display:none
+        // ===========================
         function switchTab(event, tabId) {
-            playClickSound(); 
+            playClickSound();
 
-            const contents = document.querySelectorAll('.content-box');
-            contents.forEach(content => {
-                content.classList.remove('active');
-                // รีเซ็ตการเลื่อน (Scroll) ให้กลับไปด้านบนสุดเวลาเปลี่ยนแท็บ
-                content.scrollTop = 0; 
+            // ซ่อนทุก tab
+            document.querySelectorAll('.content-box').forEach(el => {
+                el.classList.remove('active');
+                el.scrollTop = 0;
             });
 
-            const buttons = document.querySelectorAll('nav button');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            // เปิด active + force re-trigger animation
+            const target = document.getElementById(tabId);
+            // ถอด animation ก่อน 1 frame แล้วใส่ใหม่
+            target.style.animation = 'none';
+            requestAnimationFrame(() => {
+                target.style.animation = '';
+                target.classList.add('active');
+            });
 
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active'); 
+            // ปุ่ม nav
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
         }
 
-        // === ฟังก์ชันคัดลอก IP ===
+        // ===========================
+        // BUG FIX: รองรับทั้ง Clipboard API + fallback ครบถ้วน
+        // ===========================
         function copyIP(elementId, tooltipId) {
-            playCopySound(); 
+            playCopySound();
+            const text = document.getElementById(elementId).innerText.trim();
+            const tooltip = document.getElementById(tooltipId);
 
-            const copyText = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(copyText).then(() => {
-                const tooltip = document.getElementById(tooltipId);
-                tooltip.classList.add("show");
-                setTimeout(() => {
-                    tooltip.classList.remove("show");
-                }, 2000); 
-            }).catch(err => {
-                // รองรับเบราว์เซอร์เก่าหรือมือถือบางรุ่นที่บล็อก Clipboard API
-                const textArea = document.createElement("textarea");
-                textArea.value = copyText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    const tooltip = document.getElementById(tooltipId);
-                    tooltip.classList.add("show");
-                    setTimeout(() => { tooltip.classList.remove("show"); }, 2000);
-                } catch (err) {
-                    console.error('Fallback: Oops, unable to copy', err);
-                }
-                document.body.removeChild(textArea);
-            });
+            const showTooltip = () => {
+                tooltip.classList.add('show');
+                setTimeout(() => tooltip.classList.remove('show'), 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(showTooltip).catch(fallbackCopy);
+            } else {
+                fallbackCopy();
+            }
+
+            function fallbackCopy() {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+                document.body.appendChild(ta);
+                ta.focus(); ta.select();
+                try { document.execCommand('copy'); showTooltip(); }
+                catch (e) { console.error('Copy failed', e); }
+                document.body.removeChild(ta);
+            }
         }
     </script>
 </body>
