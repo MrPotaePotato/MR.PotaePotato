@@ -27,6 +27,14 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'AnakotmaiLight';
+            src: url('fonts/Anakotmai-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+
         /* ==========================================================================
            2. MINECRAFT DESIGN SYSTEM & COLOR PALETTE
            ========================================================================== */
@@ -1063,6 +1071,11 @@
             gap: 6px;
         }
 
+        .copyright-symbol {
+            font-family: 'AnakotmaiLight', sans-serif;
+            font-weight: 300;
+        }
+
         .footer-links {
             display: flex;
             align-items: center;
@@ -1529,7 +1542,7 @@
              FOOTER
              ========================================================================== -->
         <footer>
-            <div>Mr.PP Copyright © 2026. All rights reserved.</div>
+            <div><span class="copyright-symbol">©</span> 2026 Mr.PotaePotato-สงวนลิขสิทธิ์ All rights reserved.</div>
             <div class="footer-links">
                 <a href="#" class="footer-link" onclick="playClickSound(); return false;">
                     <img src="images/Mr_PotaePotato_Lo.png" alt="License Potato">
