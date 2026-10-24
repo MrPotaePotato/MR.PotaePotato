@@ -1,150 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mr Potae Potato</title>
+    <title>Mr. Potae Potato | Minecraft Community &amp; Server</title>
+    <link rel="icon" type="image/png" href="images/Mr_PotaePotato_Lo.png">
+
     <style>
-        /* === Import Local Fonts === */
+        /* ==========================================================================
+           1. MINECRAFT FONT CONFIGURATION (khotliam_lite.ttf)
+           ========================================================================== */
         @font-face {
-            font-family: 'Anakotmai';
-            src: url('fonts/Anakotmai-Light.ttf') format('truetype');
-            font-weight: 300;
+            font-family: 'KhotliamLite';
+            src: url('fonts/khotliam_lite.ttf') format('truetype');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
         }
-        @font-face {
-            font-family: 'Anakotmai';
-            src: url('fonts/Anakotmai-Medium.ttf') format('truetype');
-            font-weight: 500;
-        }
-        @font-face {
-            font-family: 'Anakotmai';
-            src: url('fonts/Anakotmai-Bold.ttf') format('truetype');
-            font-weight: 700;
-        }
+
+        /* Fallback auxiliary font for special Minecraft symbols if needed */
         @font-face {
             font-family: 'MinecraftTen';
             src: url('fonts/Minecraft-TenTH.ttf') format('truetype');
             font-weight: normal;
-        }
-        @font-face {
-            font-family: 'MinecraftFive';
-            src: url('fonts/Minecraft-Five-48bb31479b149c60fce1.otf') format('opentype');
-            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
 
-        /* === CSS Variables === */
+        /* ==========================================================================
+           2. MINECRAFT DESIGN SYSTEM & COLOR PALETTE
+           ========================================================================== */
         :root {
-            --green-dark:   #0d6e40;
-            --green-main:   #10804c;
-            --green-light:  #1ed760;
-            --green-glow:   rgba(16, 128, 76, 0.25);
-            --white-glass:  rgba(255, 255, 255, 0.70);
-            --white-card:   rgba(255, 255, 255, 0.85);
-            --shadow-soft:  0 8px 32px rgba(0, 0, 0, 0.10);
-            --shadow-card:  0 4px 16px rgba(0, 0, 0, 0.08);
-            --radius-xl:    28px;
-            --radius-lg:    20px;
-            --radius-md:    14px;
-            --radius-pill:  999px;
+            /* Authentic Minecraft Palette */
+            --mc-dark:            #121214;
+            --mc-bg-gui:          #242628;
+            --mc-bg-panel:        #1a1c1e;
+            --mc-slot-bg:         #151617;
+            --mc-stone-border:    #4a4c50;
+            --mc-stone-light:     #686b72;
+            --mc-stone-dark:      #121315;
+            
+            /* Buttons */
+            --mc-btn-bg:          #4b4d52;
+            --mc-btn-hover:       #5d6067;
+            --mc-btn-top-light:   #787b84;
+            --mc-btn-btm-dark:    #2a2b2e;
+            --mc-btn-border:      #0e0f10;
+            
+            /* Minecraft Accents */
+            --mc-green-xp:        #55ff55;
+            --mc-green-glow:      rgba(85, 255, 85, 0.35);
+            --mc-emerald:         #33c457;
+            --mc-gold:            #ffaa00;
+            --mc-diamond:         #55ffff;
+            --mc-redstone:        #ff5555;
+            --mc-red-dark:        #aa0000;
+            
+            /* Text & Shadow */
+            --mc-text-main:       #f0f2f5;
+            --mc-text-sub:        #b0b4bc;
+            --mc-text-muted:      #848892;
+            --mc-text-shadow:     2px 2px 0px #0c0d0e;
+            
+            /* Bevel Inset / Outset Helper */
+            --mc-box-bevel:       inset 3px 3px 0 var(--mc-stone-light), inset -3px -3px 0 var(--mc-stone-dark);
+            --mc-slot-bevel:      inset 2px 2px 0 #0a0a0c, inset -2px -2px 0 #3a3c42;
         }
 
-        /* === Custom Scrollbar === */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(16,128,76,0.4); border-radius: 99px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(16,128,76,0.7); }
-
-        /* === Reset === */
+        /* ==========================================================================
+           3. BASE RESET & ATMOSPHERE
+           ========================================================================== */
         *, *::before, *::after {
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: 'KhotliamLite', 'MinecraftTen', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
-            font-family: 'Anakotmai', sans-serif;
-            font-weight: 500;
-            background-image: url('images/Background_MPP.png');
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding-bottom: 1px;
+            background-color: #1a1e16;
+            color: var(--mc-text-main);
+            /* ขนาดฟอนต์ยืดหยุ่นตามหน้าจอ: จอใหญ่ใหญ่สะใจ จอเล็กปรับลดให้ไม่ล้น */
+            font-size: clamp(20px, 1.2vw + 12px, 30px);
+            line-height: 1.45;
+            letter-spacing: 0.5px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Ambient Minecraft Background */
+        body {
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(18, 28, 16, 0.45) 0%, rgba(10, 14, 9, 0.82) 100%),
+                url('images/BG-MPP.png');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
         }
 
-        /* === Glass Overlay === */
-        .glass-overlay {
+        /* Floating Pixel Canvas for Spores/Particles */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(240, 255, 247, 0.38);
-            backdrop-filter: blur(18px) saturate(1.4);
-            -webkit-backdrop-filter: blur(18px) saturate(1.4);
-            display: grid;
-            grid-template-rows: auto 1fr auto;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* ===========================
-           HEADER
-        =========================== */
+        /* App Layout Shell */
+        .app-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) auto;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* Custom Pixelated Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #151617;
+            border-left: 2px solid #282a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b4d52;
+            border: 2px solid;
+            border-color: #6d7077 #2a2b2e #2a2b2e #6d7077;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5d6067;
+        }
+
+        /* ==========================================================================
+           4. MINECRAFT HEADER & TOP BAR
+           ========================================================================== */
         header {
-            padding: 18px 40px;
+            background: rgba(26, 28, 30, 0.94);
+            border-bottom: 4px solid var(--mc-dark);
+            box-shadow: inset 0 -3px 0 var(--mc-stone-dark), inset 0 3px 0 var(--mc-stone-light), 0 6px 16px rgba(0,0,0,0.4);
+            padding: 12px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 16px;
-            /* เส้นใต้ header แบบ subtle */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            background: rgba(255,255,255,0.20);
+            gap: 20px;
         }
 
-        .logo a { display: flex; align-items: center; }
-        .logo img {
-            height: 56px;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
-        .logo img:hover { transform: scale(1.1) rotate(-4deg); }
 
-        /* Nav */
+        .logo-wrap {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 52px;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-wrap:hover .logo-img {
+            transform: scale(1.08) rotate(-2deg);
+        }
+
+        .brand-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-title {
+            font-size: 1.45rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brand-badge {
+            background: #2b451d;
+            color: var(--mc-green-xp);
+            font-size: 0.85rem;
+            padding: 3px 9px;
+            border: 1px solid var(--mc-green-xp);
+            box-shadow: 1px 1px 0 #0e1709;
+            text-transform: uppercase;
+        }
+
+        /* Controls Right */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Sound Toggle Button */
+        .sound-btn {
+            background: var(--mc-btn-bg);
+            border: 2px solid var(--mc-btn-border);
+            box-shadow: inset 2px 2px 0 var(--mc-btn-top-light), inset -2px -2px 0 var(--mc-btn-btm-dark);
+            color: #fff;
+            padding: 9px 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.15rem;
+            text-shadow: var(--mc-text-shadow);
+            transition: background 0.15s, transform 0.08s;
+        }
+        .sound-btn:hover {
+            background: var(--mc-btn-hover);
+        }
+        .sound-btn:active {
+            box-shadow: inset 2px 2px 0 var(--mc-btn-btm-dark), inset -2px -2px 0 var(--mc-btn-top-light);
+            transform: translateY(2px);
+        }
+        .sound-btn.muted {
+            opacity: 0.65;
+            filter: grayscale(0.6);
+        }
+
+        /* ==========================================================================
+           5. MINECRAFT NAVIGATION TABS (AUTHENTIC BUTTONS)
+           ========================================================================== */
+        nav {
+            margin: 0 auto;
+        }
+
         nav ul {
             list-style: none;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
-        nav button {
-            font-family: 'MinecraftFive', sans-serif;
-            font-size: 0.95em;
-            color: #2a5a3a;
-            background: rgba(255, 255, 255, 0.55);
-            border: 1.5px solid rgba(255,255,255,0.7);
-            padding: 9px 22px;
-            border-radius: var(--radius-pill);
+        .mc-tab-btn {
+            background: var(--mc-btn-bg);
+            border: 2px solid var(--mc-btn-border);
+            box-shadow: 
+                inset 2px 2px 0 var(--mc-btn-top-light), 
+                inset -2px -2px 0 var(--mc-btn-btm-dark),
+                0 3px 0 rgba(0,0,0,0.5);
+            color: #d6d9e0;
+            padding: 11px 24px;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.25s ease;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            text-shadow: var(--mc-text-shadow);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            transition: background 0.12s, color 0.12s;
             white-space: nowrap;
         }
-        nav button:hover {
-            background: rgba(255,255,255,0.90);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        nav button.active {
-            background: var(--green-main);
-            color: #fff;
-            border-color: var(--green-light);
-            box-shadow: 0 4px 18px var(--green-glow);
-            transform: translateY(-1px) scale(1.04);
+
+        .mc-tab-btn:hover {
+            background: var(--mc-btn-hover);
+            color: #ffffff;
+            box-shadow: 
+                inset 2px 2px 0 #8e929b, 
+                inset -2px -2px 0 var(--mc-btn-btm-dark),
+                0 3px 0 rgba(0,0,0,0.5);
         }
 
-        /* ===========================
-           MAIN & CONTENT BOX
-        =========================== */
+        .mc-tab-btn:active {
+            transform: translateY(2px);
+            box-shadow: 
+                inset 2px 2px 0 var(--mc-btn-btm-dark), 
+                inset -2px -2px 0 var(--mc-btn-top-light),
+                0 1px 0 rgba(0,0,0,0.5);
+        }
+
+        /* Active Tab - Emerald / XP Focus */
+        .mc-tab-btn.active {
+            background: #39542a;
+            color: #55ff55;
+            border-color: #121c0e;
+            box-shadow: 
+                inset 2px 2px 0 #6eb54b, 
+                inset -2px -2px 0 #1b2914,
+                0 0 10px var(--mc-green-glow);
+            text-shadow: 2px 2px 0 #0d1a08;
+        }
+
+        .mc-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #55ff55;
+        }
+
+        /* ==========================================================================
+           6. MAIN STAGE & MINECRAFT GUI WINDOW
+           ========================================================================== */
         main {
             display: flex;
             justify-content: center;
@@ -153,606 +331,1585 @@
             overflow: hidden;
         }
 
-        /* wrapper ทำหน้าที่ควบคุมขนาดสูงสุด */
-        .content-wrapper {
-            width: 100%;
-            max-width: 760px;
+        .gui-window-container {
+            width: 95%;
+            max-width: 1080px;
             max-height: 100%;
             position: relative;
         }
 
-        .content-box {
-            background: var(--white-glass);
-            padding: 40px 44px;
-            border-radius: var(--radius-xl);
-            border: 1.5px solid rgba(255, 255, 255, 0.85);
-            box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.9);
+        /* The Classic Minecraft GUI Window Box */
+        .gui-window {
+            background: rgba(36, 38, 42, 0.96);
+            border: 4px solid var(--mc-dark);
+            box-shadow: 
+                inset 3px 3px 0 var(--mc-stone-light), 
+                inset -3px -3px 0 var(--mc-stone-dark),
+                0 16px 40px rgba(0, 0, 0, 0.7);
+            padding: clamp(24px, 3.5vw, 44px);
             width: 100%;
-            max-height: calc(100dvh - 200px);
+            max-height: calc(100dvh - 165px);
             overflow-y: auto;
-            text-align: center;
-
-            /* ซ่อน/แสดงด้วย opacity + pointer-events แทน display:none
-               ทำให้ animation trigger ทุกครั้งที่ active */
-            opacity: 0;
-            transform: translateY(18px) scale(0.97);
-            pointer-events: none;
             position: absolute;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(14px) scale(0.98);
             transition: none;
         }
 
-        .content-box.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
+        .gui-window.active {
             position: relative;
-            animation: popIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+            animation: mcPopIn 0.28s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
         }
 
-        @keyframes popIn {
-            0%   { opacity: 0; transform: translateY(18px) scale(0.97); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes mcPopIn {
+            0% {
+                opacity: 0;
+                transform: translateY(16px) scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
-        /* ===========================
-           SECTION TITLE
-        =========================== */
-        h2.section-title {
-            font-family: 'MinecraftTen', sans-serif;
-            font-size: 2.4em;
-            font-weight: normal;
-            margin-bottom: 28px;
-            line-height: 1.25;
-            background: linear-gradient(120deg, var(--green-dark), #21bf73, var(--green-dark));
-            background-size: 250% 250%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientMove 6s ease infinite;
-            filter: drop-shadow(0 2px 6px rgba(16,128,76,0.18));
-        }
-        @keyframes gradientMove {
-            0%   { background-position: 0% 50%; }
-            50%  { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ===========================
-           SOCIAL GRID
-        =========================== */
-        .social-grid {
+        /* Window Header Title */
+        .gui-title-bar {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            gap: 6px;
+        }
+
+        .gui-title {
+            font-size: 2.35rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            font-weight: normal;
+            display: inline-flex;
+            align-items: center;
             gap: 12px;
         }
 
-        .social-item {
-            background: var(--white-card);
-            border: 1.5px solid rgba(255,255,255,0.9);
-            padding: 13px 26px;
-            border-radius: var(--radius-pill);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 11px;
-            text-decoration: none;
-            color: #3a3a3a;
-            font-size: 1.1em;
-            font-weight: 700;
-            box-shadow: var(--shadow-card);
-            transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .social-item:hover {
-            transform: translateY(-5px);
-            background: #fff;
-            border-color: var(--green-main);
-            color: var(--green-main);
-            box-shadow: 0 12px 28px var(--green-glow);
-        }
-        .social-item img {
-            width: 26px;
-            height: 26px;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-        .social-item:hover img { transform: scale(1.2) rotate(-5deg); }
-
-        /* ===========================
-           DIVIDER
-        =========================== */
-        .section-divider {
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--green-main), var(--green-light));
-            border-radius: 99px;
-            margin: 0 auto 28px;
+        .gui-title-icon {
+            font-size: 2rem;
+            image-rendering: pixelated;
         }
 
-        /* ===========================
-           SERVER INFO
-        =========================== */
-        .server-block {
-            background: rgba(255,255,255,0.6);
-            padding: 22px;
-            border-radius: var(--radius-lg);
-            border: 1.5px solid rgba(255,255,255,0.85);
-            box-shadow: var(--shadow-card);
-            margin-top: 24px;
-        }
-        .server-block h3 {
-            font-family: 'MinecraftTen', sans-serif;
-            font-size: 1.3em;
-            font-weight: normal;
-            color: var(--green-main);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .ip-card {
-            background: rgba(255,255,255,0.82);
-            padding: 16px 20px;
-            border-radius: var(--radius-md);
-            margin-bottom: 12px;
-            text-align: left;
-            border: 1px solid rgba(16,128,76,0.10);
-            transition: box-shadow 0.2s;
-        }
-        .ip-card:hover { box-shadow: 0 6px 20px var(--green-glow); }
-        .ip-card:last-child { margin-bottom: 0; }
-
-        .ip-card-title {
-            color: #8d2121;
-            font-size: 1.1em;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .ip-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            font-size: 1em;
-            color: #444;
-            margin-top: 6px;
-            padding-left: 4px;
-        }
-        .ip-row b { color: #555; }
-
-        /* Status Dot */
-        .status-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background: #2ed573;
-            border-radius: 50%;
-            flex-shrink: 0;
-            box-shadow: 0 0 8px #2ed573;
-            animation: pulse 1.8s infinite;
-        }
-        @keyframes pulse {
-            0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46,213,115,0.7); }
-            70%  { transform: scale(1);    box-shadow: 0 0 0 8px rgba(46,213,115,0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46,213,115,0); }
-        }
-
-        /* Copy-able */
-        .copy-wrap {
+        /* Minecraft Pixel Divider */
+        .pixel-divider {
+            width: 100%;
+            height: 4px;
+            background: #141517;
+            box-shadow: 0 2px 0 #4a4c52;
+            margin: 14px 0 24px 0;
             position: relative;
-            display: inline-flex;
-            align-items: center;
         }
-        .copy-able {
-            background: rgba(16,128,76,0.10);
-            color: var(--green-dark);
-            padding: 3px 10px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: 700;
-            font-family: 'Anakotmai', monospace;
-            word-break: break-all;
-            transition: background 0.2s;
-            border: 1px solid rgba(16,128,76,0.15);
-        }
-        .copy-able:hover  { background: rgba(16,128,76,0.18); }
-        .copy-able:active { background: rgba(16,128,76,0.28); }
 
-        .copy-tooltip {
-            visibility: hidden;
-            opacity: 0;
-            background: #1a1a1a;
-            color: #fff;
-            font-family: 'Anakotmai', sans-serif;
-            font-size: 0.78em;
-            white-space: nowrap;
-            padding: 5px 11px;
-            border-radius: 8px;
-            position: absolute;
-            bottom: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
-            pointer-events: none;
-            transition: opacity 0.2s, visibility 0.2s;
-            z-index: 10;
-        }
-        .copy-tooltip::after {
+        .pixel-divider::before {
             content: '';
             position: absolute;
-            top: 100%; left: 50%;
+            left: 50%;
+            top: -2px;
             transform: translateX(-50%);
-            border: 5px solid transparent;
-            border-top-color: #1a1a1a;
-        }
-        .copy-tooltip.show { visibility: visible; opacity: 1; }
-
-        .server-note {
-            font-size: 0.82em;
-            color: #999;
-            margin-top: 18px;
-            font-weight: 700;
+            width: 14px;
+            height: 8px;
+            background: #55ff55;
+            box-shadow: 0 0 6px var(--mc-green-glow), inset 1px 1px 0 #aaffaa;
         }
 
-        /* Bedrock list */
-        .bedrock-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 8px;
+        /* ==========================================================================
+           7. MINECRAFT CARDS & INVENTORY SLOTS
+           ========================================================================== */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+            gap: 18px;
+        }
+
+        /* Minecraft Quest/Inventory Card - 2-row layout without arrow */
+        .mc-item-card {
+            background: #202226;
+            border: 2px solid var(--mc-dark);
+            box-shadow: 
+                inset 2px 2px 0 var(--mc-stone-light), 
+                inset -2px -2px 0 var(--mc-stone-dark),
+                0 4px 8px rgba(0,0,0,0.35);
+            padding: 18px 22px;
             display: flex;
             flex-direction: column;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--mc-text-main);
+            transition: background 0.15s, transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+            cursor: pointer;
+            position: relative;
+            text-align: left;
+        }
+
+        .mc-item-card:hover {
+            background: #2b2e34;
+            transform: translateY(-3px);
+            border-color: #ffffff;
+            box-shadow: 
+                inset 2px 2px 0 #7e828d, 
+                inset -2px -2px 0 #121316,
+                0 8px 18px rgba(0,0,0,0.45);
+        }
+
+        .mc-item-card:active {
+            transform: translateY(1px);
+        }
+
+        /* Row 1: Logo + Full Name */
+        .card-head-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        /* Inventory Icon Slot Frame */
+        .mc-slot {
+            width: 56px;
+            height: 56px;
+            background: var(--mc-slot-bg);
+            border: 2px solid #0e0f11;
+            box-shadow: var(--mc-slot-bevel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .mc-slot img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        .mc-item-card:hover .mc-slot img {
+            transform: scale(1.18) rotate(-4deg);
+        }
+
+        .card-name-wrap {
+            flex: 1;
+            overflow: visible;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.25;
+            display: block;
+        }
+
+        .mc-item-card:hover .card-title {
+            color: var(--mc-green-xp);
+        }
+
+        /* Row 2: Channel / Platform Name (ลงมาอีกบรรทัด) */
+        .card-sub-row {
+            border-top: 1px dashed rgba(255, 255, 255, 0.16);
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-channel-name {
+            font-size: 1.05rem;
+            color: var(--mc-gold);
+            text-shadow: var(--mc-text-shadow);
+            letter-spacing: 0.6px;
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
-        .bedrock-list li {
-            font-size: 0.97em;
-            color: #444;
-            padding-left: 4px;
+
+        /* ==========================================================================
+           8. MINECRAFT SERVER SECTION & LIVE STATUS
+           ========================================================================== */
+        .server-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* Live Server Status Banner */
+        .server-live-banner {
+            background: #18191c;
+            border: 2px solid var(--mc-dark);
+            box-shadow: var(--mc-slot-bevel);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .live-status-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Beacon / Status Dot */
+        .beacon-dot {
+            width: 16px;
+            height: 16px;
+            background: #55ff55;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 10px #55ff55, inset 1px 1px 0 #aaffaa;
+            animation: mcBeaconPulse 1.8s infinite;
+            flex-shrink: 0;
+        }
+
+        .beacon-dot.offline {
+            background: #ff5555;
+            border-color: #ffaaaa;
+            box-shadow: 0 0 10px #ff5555;
+            animation: none;
+        }
+
+        @keyframes mcBeaconPulse {
+            0%   { transform: scale(0.95); box-shadow: 0 0 4px #55ff55; }
+            50%  { transform: scale(1.1);  box-shadow: 0 0 14px #55ff55, 0 0 22px rgba(85,255,85,0.6); }
+            100% { transform: scale(0.95); box-shadow: 0 0 4px #55ff55; }
+        }
+
+        .live-info-text {
+            text-align: left;
+        }
+
+        .live-title {
+            font-size: 1.35rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-motd {
+            font-size: 1.05rem;
+            color: var(--mc-text-sub);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .live-stats {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .stat-badge {
+            background: #25282d;
+            border: 1px solid #3c4048;
+            padding: 8px 14px;
+            font-size: 1.1rem;
+            color: var(--mc-gold);
+            text-shadow: var(--mc-text-shadow);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .refresh-btn {
+            background: var(--mc-btn-bg);
+            border: 2px solid var(--mc-btn-border);
+            box-shadow: inset 1px 1px 0 var(--mc-btn-top-light), inset -1px -1px 0 var(--mc-btn-btm-dark);
+            color: #fff;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-shadow: var(--mc-text-shadow);
+        }
+        .refresh-btn:hover { background: var(--mc-btn-hover); }
+        .refresh-btn:active { transform: translateY(1px); }
+        .refresh-icon.spin { animation: spin 0.8s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Server Edition Boxes Grid */
+        .edition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .edition-box {
+            background: #202226;
+            border: 2px solid var(--mc-dark);
+            box-shadow: 
+                inset 2px 2px 0 var(--mc-stone-light), 
+                inset -2px -2px 0 var(--mc-stone-dark);
+            padding: 22px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .edition-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #161719;
+            padding-bottom: 10px;
+        }
+
+        .edition-title {
+            font-size: 1.45rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edition-tag {
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            background: #18191c;
+            border: 1px solid #363940;
+            color: var(--mc-text-sub);
+        }
+
+        /* Copyable Field Rows */
+        .mc-copy-row {
+            background: #151618;
+            border: 2px solid #0e0f11;
+            box-shadow: var(--mc-slot-bevel);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .field-label {
+            font-size: 1.1rem;
+            color: var(--mc-gold);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .field-val {
+            font-size: 1.25rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            word-break: break-all;
+            letter-spacing: 0.8px;
+        }
+
+        /* Copy Button */
+        .btn-copy {
+            background: var(--mc-btn-bg);
+            border: 2px solid var(--mc-btn-border);
+            box-shadow: inset 1px 1px 0 var(--mc-btn-top-light), inset -1px -1px 0 var(--mc-btn-btm-dark);
+            color: #ffffff;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            text-shadow: var(--mc-text-shadow);
+            transition: background 0.12s, transform 0.08s;
+            position: relative;
+        }
+
+        .btn-copy:hover {
+            background: var(--mc-btn-hover);
+        }
+
+        .btn-copy:active {
+            transform: translateY(2px);
+            box-shadow: inset 1px 1px 0 var(--mc-btn-btm-dark), inset -1px -1px 0 var(--mc-btn-top-light);
+        }
+
+        /* Bedrock Quick Connect Button */
+        .btn-direct-connect {
+            background: #2d5a31;
+            border: 2px solid var(--mc-dark);
+            box-shadow: 
+                inset 2px 2px 0 #5aa360, 
+                inset -2px -2px 0 #18331b,
+                0 3px 0 rgba(0,0,0,0.4);
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 1.22rem;
+            text-shadow: var(--mc-text-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.15s, transform 0.1s;
+            margin-top: 4px;
+        }
+
+        .btn-direct-connect:hover {
+            background: #39733e;
+            box-shadow: 
+                inset 2px 2px 0 #72c479, 
+                inset -2px -2px 0 #18331b,
+                0 3px 0 rgba(0,0,0,0.4);
+        }
+
+        .btn-direct-connect:active {
+            transform: translateY(2px);
+        }
+
+        /* Server Instruction Steps */
+        .server-steps {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 1.1rem;
+            color: var(--mc-text-sub);
+        }
+
+        .server-steps li {
+            line-height: 1.5;
+        }
+
+        .step-num {
+            color: var(--mc-diamond);
+            font-weight: bold;
+        }
+
+        /* Server Community Links */
+        .server-quick-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .server-quick-btn {
+            flex: 1;
+            min-width: 140px;
+            background: #1c1e22;
+            border: 2px solid var(--mc-dark);
+            box-shadow: inset 1px 1px 0 var(--mc-stone-light), inset -1px -1px 0 var(--mc-stone-dark);
+            padding: 12px 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.15rem;
+            text-shadow: var(--mc-text-shadow);
+            transition: background 0.12s;
+        }
+
+        .server-quick-btn:hover {
+            background: #282a30;
+            color: var(--mc-green-xp);
+        }
+
+        /* ==========================================================================
+           9. DONATE & SUPPORT SECTION
+           ========================================================================== */
+        .donate-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .donate-hero-card {
+            background: #202226;
+            border: 3px solid var(--mc-dark);
+            box-shadow: 
+                inset 3px 3px 0 #7a6e45, 
+                inset -3px -3px 0 #2b2512,
+                0 8px 24px rgba(0,0,0,0.5);
+            max-width: 580px;
+            width: 100%;
+            padding: 30px 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            text-align: center;
+        }
+
+        .donate-icon-wrap {
+            width: 84px;
+            height: 84px;
+            background: #18191c;
+            border: 3px solid #0e0f11;
+            box-shadow: var(--mc-slot-bevel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donate-icon-wrap img {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .donate-desc {
+            font-size: 1.2rem;
+            color: var(--mc-text-sub);
             line-height: 1.6;
         }
 
-        /* ===========================
-           CONTACT
-        =========================== */
-        .contact-info {
+        .btn-donate {
+            background: #996e1b;
+            border: 3px solid var(--mc-dark);
+            box-shadow: 
+                inset 2px 2px 0 #dfaa37, 
+                inset -2px -2px 0 #4a340b,
+                0 4px 12px rgba(0,0,0,0.4);
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+            padding: 16px 38px;
+            font-size: 1.45rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+
+        .btn-donate:hover {
+            background: #b58320;
+            box-shadow: 
+                inset 2px 2px 0 #ffd05b, 
+                inset -2px -2px 0 #4a340b,
+                0 6px 16px rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-donate:active {
+            transform: translateY(2px);
+        }
+
+        /* ==========================================================================
+           10. CONTACT SECTION & WARNING BOX
+           ========================================================================== */
+        .contact-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            align-items: center;
+            gap: 18px;
+            max-width: 620px;
+            margin: 0 auto;
         }
-        .contact-info p {
-            font-size: 1.35em;
-            color: #444;
-            background: rgba(255,255,255,0.70);
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            border: 1.5px solid rgba(255,255,255,0.9);
-            box-shadow: var(--shadow-card);
-            word-break: break-word;
-            max-width: 100%;
-            width: 100%;
-        }
-        .contact-info .highlight {
-            color: #c0392b;
-            font-weight: 700;
-            font-size: 1.05em;
-            border-left: 4px solid #e74c3c;
-            background: rgba(231, 76, 60, 0.08);
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+
+        .contact-box {
+            background: #202226;
+            border: 2px solid var(--mc-dark);
+            box-shadow: var(--mc-box-bevel);
+            padding: 22px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             text-align: left;
         }
 
-        /* ===========================
-           FOOTER
-        =========================== */
-        footer {
-            text-align: center;
-            padding: 14px 20px;
-            color: #2a4a35;
-            font-size: 0.85em;
-            font-weight: 500;
-            border-top: 1px solid rgba(255,255,255,0.5);
-            background: rgba(255,255,255,0.18);
-            line-height: 1.8;
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #161719;
+            padding: 14px 18px;
+            border: 2px solid #0e0f11;
+            box-shadow: var(--mc-slot-bevel);
         }
-        footer a {
-            color: var(--green-main);
+
+        .contact-label {
+            font-size: 1.1rem;
+            color: var(--mc-gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-email {
+            font-size: 1.35rem;
+            color: #ffffff;
+            text-shadow: var(--mc-text-shadow);
+        }
+
+        /* Minecraft Redstone Warning Notice */
+        .mc-notice-card {
+            background: #281818;
+            border: 2px solid #5a1919;
+            box-shadow: 
+                inset 2px 2px 0 #853333, 
+                inset -2px -2px 0 #180808,
+                0 4px 10px rgba(0,0,0,0.3);
+            padding: 18px 22px;
+            text-align: left;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .notice-icon {
+            font-size: 1.8rem;
+            color: var(--mc-redstone);
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .notice-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .notice-title {
+            font-size: 1.2rem;
+            color: var(--mc-redstone);
+            text-shadow: 2px 2px 0 #1c0606;
+            font-weight: bold;
+        }
+
+        .notice-text {
+            font-size: 1.1rem;
+            color: #e5b3b3;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           11. MINECRAFT ITEM TOOLTIP (POPUP NOTIFICATION)
+           ========================================================================== */
+        .mc-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(40px);
+            background: rgba(16, 0, 16, 0.96);
+            border: 2px solid #280058;
+            box-shadow: 
+                0 0 0 2px #5000ff, 
+                inset 0 0 0 1px #8000ff,
+                0 8px 24px rgba(0, 0, 0, 0.85);
+            color: #ffffff;
+            padding: 14px 28px;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 0 #100010;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), 
+                        transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        .mc-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .mc-toast-icon {
+            color: var(--mc-green-xp);
+            font-size: 1.45rem;
+        }
+
+        /* ==========================================================================
+           12. MINECRAFT FOOTER
+           ========================================================================== */
+        footer {
+            background: rgba(22, 24, 26, 0.96);
+            border-top: 4px solid var(--mc-dark);
+            box-shadow: inset 0 2px 0 var(--mc-stone-light);
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--mc-text-sub);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--mc-green-xp);
             text-decoration: none;
-            font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            transition: opacity 0.2s;
+            gap: 6px;
+            font-size: 1.05rem;
+            transition: color 0.15s;
         }
-        footer a:hover { opacity: 0.75; }
-        footer a img { vertical-align: middle; height: 15px; }
 
-        /* ===========================
-           MOBILE RESPONSIVE
-        =========================== */
+        .footer-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px var(--mc-green-glow);
+        }
+
+        .footer-link img {
+            height: 18px;
+            image-rendering: pixelated;
+        }
+
+        .footer-credit {
+            font-size: 0.95rem;
+            color: var(--mc-text-muted);
+        }
+
+        /* ==========================================================================
+           13. RESPONSIVE DESIGN (MOBILE & TABLET OPTIMIZATIONS)
+           ========================================================================== */
         @media (max-width: 768px) {
+            html, body {
+                /* ขนาดฟอนต์มือถือยืดหยุ่น พอดีกับขนาดหน้าจอทุกรุ่น */
+                font-size: clamp(17px, 4.2vw, 22px);
+            }
+
             header {
                 flex-direction: column;
+                padding: 12px 14px;
                 gap: 12px;
-                padding: 14px 16px;
             }
-            .logo img { height: 46px; }
-            nav ul { gap: 7px; }
-            nav button {
-                font-size: 0.82em;
-                padding: 8px 14px;
+
+            .header-brand {
+                width: 100%;
+                justify-content: space-between;
             }
-            main { padding: 12px 14px; }
-            .content-box {
-                padding: 24px 18px;
-                border-radius: var(--radius-lg);
-                max-height: calc(100dvh - 195px);
+
+            .logo-img {
+                height: 44px;
             }
-            h2.section-title {
-                font-size: 1.8em;
-                margin-bottom: 18px;
+
+            nav ul {
+                gap: 6px;
             }
+
+            .mc-tab-btn {
+                font-size: 1.05rem;
+                padding: 8px 12px;
+                gap: 6px;
+            }
+
+            main {
+                padding: 8px 10px;
+            }
+
+            .gui-window-container {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .gui-window {
+                padding: 20px 14px;
+                max-height: calc(100dvh - 190px);
+            }
+
+            .gui-title {
+                font-size: 1.85rem;
+            }
+
             .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .edition-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .server-live-banner {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: flex-start;
             }
-            .social-item {
-                font-size: 1em;
-                padding: 14px 18px;
-                border-radius: var(--radius-lg);
+
+            .live-stats {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
             }
-            .server-block { padding: 16px; }
-            .server-block h3 { font-size: 1.1em; }
-            .contact-info p { font-size: 1.1em; padding: 12px 16px; }
+
+            .mc-copy-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-copy {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="glass-overlay">
 
+    <!-- Floating Spore Particles Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Global Minecraft Item Tooltip / Notification -->
+    <div id="mc-toast" class="mc-toast">
+        <span class="mc-toast-icon">✨</span>
+        <span id="mc-toast-msg">คัดลอกเรียบร้อยแล้ว!</span>
+    </div>
+
+    <div class="app-container">
+
+        <!-- ==========================================================================
+             HEADER
+             ========================================================================== -->
         <header>
-            <div class="logo">
-                <a href="#"><img src="images/Mr_PotaePotato_Lo.png" alt="Mr.PotaePotato Logo"></a>
+            <div class="header-brand">
+                <a href="#" class="logo-wrap" onclick="playClickSound();">
+                    <img src="images/Mr_PotaePotato_Lo.png" alt="Mr.PotaePotato Logo" class="logo-img">
+                </a>
+                <div class="brand-meta">
+                    <div class="brand-title">
+                        Mr. Potae Potato
+                        <span class="brand-badge">Official</span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Navigation Tabs -->
             <nav>
                 <ul id="nav-menu">
-                    <li><button onclick="switchTab(event,'links')" class="active">Links</button></li>
-                    <li><button onclick="switchTab(event,'support')">Support</button></li>
-                    <li><button onclick="switchTab(event,'other-links')">MY Minecraft Server</button></li>
-                    <li><button onclick="switchTab(event,'contact')">Contact</button></li>
+                    <li>
+                        <button class="mc-tab-btn active" onclick="switchTab(event, 'links')">
+                            <span>🌐</span> ชุมชน / Social
+                        </button>
+                    </li>
+                    <li>
+                        <button class="mc-tab-btn" onclick="switchTab(event, 'minecraft')">
+                            <span>⚔️</span> เซิร์ฟเวอร์ MC
+                        </button>
+                    </li>
+                    <li>
+                        <button class="mc-tab-btn" onclick="switchTab(event, 'support')">
+                            <span>💎</span> สนับสนุน
+                        </button>
+                    </li>
+                    <li>
+                        <button class="mc-tab-btn" onclick="switchTab(event, 'contact')">
+                            <span>📜</span> ติดต่อ
+                        </button>
+                    </li>
                 </ul>
             </nav>
+
+            <!-- Sound Controls -->
+            <div class="header-controls">
+                <button id="sound-btn" class="sound-btn" onclick="toggleSound()" title="เปิด/ปิดเสียง">
+                    <span id="sound-icon">🔊</span>
+                    <span id="sound-text">เสียง ON</span>
+                </button>
+            </div>
         </header>
 
+        <!-- ==========================================================================
+             MAIN CONTENT BOXES (MINECRAFT GUI)
+             ========================================================================== -->
         <main>
-            <div class="content-wrapper">
+            <div class="gui-window-container">
 
-                <!-- === TAB: Links === -->
-                <div id="links" class="content-box active">
-                    <h2 class="section-title">Social Media</h2>
-                    <div class="section-divider"></div>
+                <!-- ------------------------------------------------------------------
+                     TAB 1: SOCIAL LINKS
+                     ------------------------------------------------------------------ -->
+                <div id="links" class="gui-window active">
+                    <div class="gui-title-bar">
+                        <h2 class="gui-title">
+                            <span class="gui-title-icon"></span> Social Media &amp; Community
+                        </h2>
+                        <div class="pixel-divider"></div>
+                    </div>
+
                     <div class="social-grid">
-                        <a href="https://www.youtube.com/channel/UCoTf8ucUB41mpGcJRsSij_A" target="_blank" class="social-item">
-                            <img src="images/youtube_icon.png" alt="YouTube"> MR.PotaePotato
-                        </a>
-                        <a href="https://www.tiktok.com/@mr.potato.potae" target="_blank" class="social-item">
-                            <img src="images/tikok_icon.png" alt="TikTok"> MR.Potato.Potae
-                        </a>
-                        <a href="https://discord.gg/ePxyHTEP9q" target="_blank" class="social-item">
-                            <img src="images/discord_icon.png" alt="Discord"> ᴘᴏᴛᴀᴇᴘᴏᴛᴀᴛᴏ ᴄɪᴛʏ
-                        </a>
-                    </div>
-                </div>
-
-                <!-- === TAB: Support === -->
-                <div id="support" class="content-box">
-                    <h2 class="section-title">Support &amp; Donate</h2>
-                    <div class="section-divider"></div>
-                    <div class="social-grid">
-                        <a href="https://easydonate.app/MrPotaePotato" target="_blank" class="social-item">
-                            <img src="images/EasyDonate.png" alt="EasyDonate"> EasyDonate MrPotaePotato
-                        </a>
-                    </div>
-                </div>
-
-                <!-- === TAB: Minecraft Server === -->
-                <div id="other-links" class="content-box">
-                    <h2 class="section-title">Minecraft Server</h2>
-                    <div class="section-divider"></div>
-
-                    <div class="social-grid" style="margin-bottom: 0;">
-                        <a href="https://discord.gg/FQStHyrHsC" target="_blank" class="social-item">
-                            <img src="images/discord_icon.png" alt="Discord"> [Gen 8] 🌸 ZMTBS Community 🌸
-                        </a>
-                        <a href="https://zmtbs.qzz.io/" target="_blank" class="social-item">
-                            🌎 Website Server
-                        </a>
-                    </div>
-
-                    <div class="server-block">
-                        <h3>🖥️ IP Server สำหรับเข้าเล่น</h3>
-
-                        <!-- Java -->
-                        <div class="ip-card">
-                            <div class="ip-card-title">
-                                <span class="status-dot"></span> ☕ Java Edition
+                        <!-- YouTube -->
+                        <a href="https://youtube.com/@mr.potae.potate?si=-A6ACzcIDHG1BvZ2" target="_blank" rel="noopener noreferrer" class="mc-item-card" onclick="playClickSound();">
+                            <div class="card-head-row">
+                                <div class="mc-slot">
+                                    <img src="images/youtube_icon.png" alt="YouTube">
+                                </div>
+                                <div class="card-name-wrap">
+                                    <span class="card-title">MR.PotaePotato</span>
+                                </div>
                             </div>
-                            <div class="ip-row">
-                                <b>IP:</b>
-                                <div class="copy-wrap">
-                                    <span id="java-ip" class="copy-able" onclick="copyIP('java-ip','java-tooltip')">zmtbs.qzz.io</span>
-                                    <span id="java-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
+                            <div class="card-sub-row">
+                                <span class="card-channel-name">📺 YouTube Channel</span>
+                            </div>
+                        </a>
+
+                        <!-- TikTok -->
+                        <a href="https://www.tiktok.com/@mr.potato.potae" target="_blank" rel="noopener noreferrer" class="mc-item-card" onclick="playClickSound();">
+                            <div class="card-head-row">
+                                <div class="mc-slot">
+                                    <img src="images/tikok_icon.png" alt="TikTok">
+                                </div>
+                                <div class="card-name-wrap">
+                                    <span class="card-title">MR.Potato.Potae</span>
+                                </div>
+                            </div>
+                            <div class="card-sub-row">
+                                <span class="card-channel-name">🎵 TikTok Creator</span>
+                            </div>
+                        </a>
+
+                        <!-- Discord Official -->
+                        <a href="https://discord.gg/ePxyHTEP9q" target="_blank" rel="noopener noreferrer" class="mc-item-card" onclick="playClickSound();">
+                            <div class="card-head-row">
+                                <div class="mc-slot">
+                                    <img src="images/discord_icon.png" alt="Discord">
+                                </div>
+                                <div class="card-name-wrap">
+                                    <span class="card-title">PotaePotato City</span>
+                                </div>
+                            </div>
+                            <div class="card-sub-row">
+                                <span class="card-channel-name">💬 Official Discord Server</span>
+                            </div>
+                        </a>
+
+                        <!-- Server Discord Community -->
+                        <a href="https://discord.gg/FQStHyrHsC" target="_blank" rel="noopener noreferrer" class="mc-item-card" onclick="playClickSound();">
+                            <div class="card-head-row">
+                                <div class="mc-slot">
+                                    <img src="images/discord_icon.png" alt="Discord Server">
+                                </div>
+                                <div class="card-name-wrap">
+                                    <span class="card-title">ZMTBS Community</span>
+                                </div>
+                            </div>
+                            <div class="card-sub-row">
+                                <span class="card-channel-name">🔮 Minecraft Server Discord</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ------------------------------------------------------------------
+                     TAB 2: MINECRAFT SERVER (LIVE PING + INSTRUCTIONS)
+                     ------------------------------------------------------------------ -->
+                <div id="minecraft" class="gui-window">
+                    <div class="gui-title-bar">
+                        <h2 class="gui-title">
+                            <span class="gui-title-icon"></span> Minecraft Server Info
+                        </h2>
+                        <div class="pixel-divider"></div>
+                    </div>
+
+                    <div class="server-container">
+
+                        <!-- Live Server Status Banner -->
+                        <div class="server-live-banner">
+                            <div class="live-status-group">
+                                <div id="server-beacon" class="beacon-dot"></div>
+                                <div class="live-info-text">
+                                    <div class="live-title">
+                                        <span id="server-status-text">กำลังตรวจสอบสถานะเซิร์ฟเวอร์...</span>
+                                    </div>
+                                    <div id="server-motd" class="live-motd">zmbs.qzz.io</div>
+                                </div>
+                            </div>
+                            <div class="live-stats">
+                                <div class="stat-badge" title="จำนวนผู้เล่นออนไลน์รวมทั้งหมด">
+                                    <span>👥 ผู้เล่นรวมทั้งหมด:</span>
+                                    <strong id="server-players">- คน</strong>
+                                </div>
+                                <div class="stat-badge" title="เวอร์ชันเซิร์ฟเวอร์">
+                                    <span>📦 เวอร์ชัน:</span>
+                                    <strong id="server-version">1.21.9+</strong>
+                                </div>
+                                <button class="refresh-btn" onclick="fetchServerStatus(true)" title="รีเฟรชข้อมูลสถานะ">
+                                    <span id="refresh-icon" class="refresh-icon">🔄</span> รีเฟรช
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Server Editions Grid -->
+                        <div class="edition-grid">
+
+                            <!-- Java Edition -->
+                            <div class="edition-box">
+                                <div class="edition-header">
+                                    <h3 class="edition-title">☕ Java Edition</h3>
+                                </div>
+
+                                <p style="font-size:0.95rem; color:var(--mc-text-sub);">
+                                    รองรับเวอร์ชัน 1.21.9 - 26.3 (แนะนำเวอร์ชันล่าสุดของเซิร์ฟเวอร์ที่ระบุ เพื่อประสบการณ์ที่ดีที่สุด)
+                                </p>
+
+                                <div class="mc-copy-row">
+                                    <div>
+                                        <div class="field-label">SERVER IP (Java)</div>
+                                        <div class="field-val" id="java-ip-val">zmtbs.qzz.io</div>
+                                    </div>
+                                    <button class="btn-copy" onclick="copyToClipboard('zmtbs.qzz.io', 'คัดลอก Java IP สำเร็จแล้ว!')">
+                                        📋 คัดลอก IP
+                                    </button>
+                                </div>
+
+                                <div class="server-quick-links">
+                                    <a href="https://zmtbs.qzz.io/" target="_blank" rel="noopener noreferrer" class="server-quick-btn" onclick="playClickSound();">
+                                        <span>🌍</span> เว็บไซต์เซิร์ฟเวอร์
+                                    </a>
+                                    <a href="https://discord.gg/FQStHyrHsC" target="_blank" rel="noopener noreferrer" class="server-quick-btn" onclick="playClickSound();">
+                                        <span>💬</span> ดิสคอร์ดเซิร์ฟเวอร์
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Bedrock Edition -->
+                            <div class="edition-box">
+                                <div class="edition-header">
+                                    <h3 class="edition-title">📱 Bedrock Edition</h3>
+                                </div>
+
+                                <ul class="server-steps">
+                                    <li>
+                                        <span class="step-num">วิธีที่ 1 :</span> แอดเพื่อน Xbox ในเกมชื่อ 
+                                        <strong style="color:#ffffff;">ZMTBS</strong> แล้วกด Join ได้ทันที
+                                    </li>
+                                    <li>
+                                        <span class="step-num">วิธีที่ 2 :</span> กรอก IP และ Port ในหน้า Servers:
+                                    </li>
+                                </ul>
+
+                                <div class="mc-copy-row">
+                                    <div>
+                                        <div class="field-label">BEDROCK IP</div>
+                                        <div class="field-val" id="bedrock-ip-val">zmtbs.qzz.io</div>
+                                    </div>
+                                    <button class="btn-copy" onclick="copyToClipboard('zmtbs.qzz.io', 'คัดลอก Bedrock IP สำเร็จ!')">
+                                        📋 คัดลอก
+                                    </button>
+                                </div>
+
+                                <div class="mc-copy-row">
+                                    <div>
+                                        <div class="field-label">PORT</div>
+                                        <div class="field-val" id="bedrock-port-val">19132</div>
+                                    </div>
+                                    <button class="btn-copy" onclick="copyToClipboard('19132', 'คัดลอก Port สำเร็จ!')">
+                                        📋 คัดลอก
+                                    </button>
+                                </div>
+
+                                <!-- Direct Join Protocol -->
+                                <a href="minecraft://?addExternalServer=ZMTBS|zmtbs.qzz.io:19132" class="btn-direct-connect" onclick="playClickSound();">
+                                    <span>🚀</span> กดเพื่อเข้าเล่นเกม Bedrock ทันที
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ------------------------------------------------------------------
+                     TAB 3: SUPPORT & DONATE
+                     ------------------------------------------------------------------ -->
+                <div id="support" class="gui-window">
+                    <div class="gui-title-bar">
+                        <h2 class="gui-title">
+                            <span class="gui-title-icon">💎</span> Support &amp; Donate
+                        </h2>
+                        <div class="pixel-divider"></div>
+                    </div>
+
+                    <div class="donate-container">
+                        <div class="donate-hero-card">
+                            <div class="donate-icon-wrap">
+                                <img src="images/EasyDonate.png" alt="EasyDonate">
+                            </div>
+                            
+                            <h3 style="font-size:1.6rem; color:#ffd05b; text-shadow:var(--mc-text-shadow);">
+                                สนับสนุน Mr. Potae Potato
+                            </h3>
+
+                            <p class="donate-desc">
+                                ทุกการสนับสนุนผ่าน EasyDonate ช่วยเป็นกำลังใจในการพัฒนาคอนเทนต์, 
+                                ดูแลระบบเซิร์ฟเวอร์ Minecraft และจัดกิจกรรมสนุกๆ ให้ทุกคนในคอมมูนิตี้ครับ!
+                            </p>
+
+                            <a href="https://easydonate.app/MrPotaePotato" target="_blank" rel="noopener noreferrer" class="btn-donate" onclick="playXpSound();">
+                                <span>🪙</span> โดเนทผ่าน EasyDonate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ------------------------------------------------------------------
+                     TAB 4: CONTACT
+                     ------------------------------------------------------------------ -->
+                <div id="contact" class="gui-window">
+                    <div class="gui-title-bar">
+                        <h2 class="gui-title">
+                            <span class="gui-title-icon">📜</span> Contact Information
+                        </h2>
+                        <div class="pixel-divider"></div>
+                    </div>
+
+                    <div class="contact-container">
+                        <div class="contact-box">
+                            <div class="contact-row">
+                                <div>
+                                    <div class="contact-label"><span>📧</span> EMAIL ADDRESS</div>
+                                    <div class="contact-email">mr.potae.potato.official@gmail.com</div>
+                                </div>
+                                <button class="btn-copy" onclick="copyToClipboard('mr.potae.potato.official@gmail.com', 'คัดลอกอีเมลเรียบร้อย!')">
+                                    📋 คัดลอก Email
+                                </button>
+                            </div>
+
+                            <div class="contact-row">
+                                <div>
+                                    <div class="contact-label"><span>💬</span> OFFICIAL DISCORD</div>
+                                    <div class="contact-email">PotaePotato City</div>
+                                </div>
+                                <a href="https://discord.gg/ePxyHTEP9q" target="_blank" rel="noopener noreferrer" class="btn-copy" style="text-decoration:none;" onclick="playClickSound();">
+                                    🚪 เข้าร่วม Discord
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Minecraft Warning / Notice Card -->
+                        <div class="mc-notice-card">
+                            <div class="notice-icon">⚠️</div>
+                            <div class="notice-content">
+                                <div class="notice-title">เงื่อนไขการติดต่องาน</div>
+                                <div class="notice-text">
+                                    ไม่รับงานที่เกี่ยวข้องเกี่ยวกับส่งที่ผิดกฎหหมาย หรือ การโปรโมทเว็บการพนันทุกชนิดโดยเด็ดขาดครับ
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Bedrock -->
-                        <div class="ip-card">
-                            <div class="ip-card-title">
-                                <span class="status-dot"></span> 📱 Bedrock Edition
-                            </div>
-                            <ul class="bedrock-list">
-                                <li>
-                                    <b>วิธีที่ 1 (เพิ่มเพื่อน):</b><br>
-                                    แอดเพื่อน Xbox ชื่อ 
-                                    <div class="copy-wrap" style="display: inline-block;">
-                                        <b id="xbox-name" class="copy-able" onclick="copyIP('xbox-name','xbox-tooltip')">ZMTBS</b>
-                                        <span id="xbox-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
-                                    </div>
-                                    ในเกม รอสักครู่
-                                </li>
-                                <li>
-                                    <b>วิธีที่ 2 (ใส่ IP):</b>
-                                    <div class="ip-row" style="margin-top:6px;">
-                                        <b>IP:</b>
-                                        <div class="copy-wrap">
-                                            <span id="bedrock-ip" class="copy-able" onclick="copyIP('bedrock-ip','bedrock-tooltip')">zmtbs.qzz.io</span>
-                                            <span id="bedrock-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
-                                        </div>
-                                    </div>
-                                    <div class="ip-row">
-                                        <b>Port:</b>
-                                        <div class="copy-wrap">
-                                            <span id="bedrock-port" class="copy-able" onclick="copyIP('bedrock-port','port-tooltip')">19132</span>
-                                            <span id="port-tooltip" class="copy-tooltip">📋 คัดลอกแล้ว!</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <p class="server-note">อัปเดตล่าสุด • 7/26/2569 </p>
-                    </div>
-                </div>
-
-                <!-- === TAB: Contact === -->
-                <div id="contact" class="content-box">
-                    <h2 class="section-title">Contact Me</h2>
-                    <div class="section-divider"></div>
-                    <div class="contact-info">
-                        <p>📧 potae1898@gmail.com</p>
-                        <p class="highlight">** หมายเหตุ: ไม่รับงานที่เกี่ยวกับการทำเว็บไซต์หรือเว็บพนันครับ **</p>
                     </div>
                 </div>
 
             </div>
         </main>
 
+        <!-- ==========================================================================
+             FOOTER
+             ========================================================================== -->
         <footer>
-            Mr.PP Copyright © 2026. All rights reserved.<br>
-            <a href="#">
-                <img src="images/Mr_PotaePotato_Lo.png" alt="License Potato">
-                License Potato
-            </a>
+            <div>Mr.PP Copyright © 2026. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="playClickSound(); return false;">
+                    <img src="images/Mr_PotaePotato_Lo.png" alt="License Potato">
+                    <span>License Potato</span>
+                </a>
+                <span>•</span>
+                <span class="footer-credit">Font: khotliam by parmnitchan</span>
+            </div>
         </footer>
 
     </div>
 
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC: AUDIO, TABS, CLIPBOARD & LIVE API
+         ========================================================================== -->
     <script>
-        // ===========================
-        // BUG FIX: สร้าง AudioContext หลัง user interaction ครั้งแรก
-        // ===========================
+        // ==========================================================================
+        // 1. MINECRAFT WEB AUDIO ENGINE (SYNTHESIZED RETRO SFX)
+        // ==========================================================================
         let audioCtx = null;
-        function getAudioCtx() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isSoundMuted = false;
+
+        // Load sound preference from localStorage
+        try {
+            if (localStorage.getItem('mpp_sound_muted') === 'true') {
+                isSoundMuted = true;
             }
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+        } catch (e) {}
+
+        function updateSoundBtnUI() {
+            const btn = document.getElementById('sound-btn');
+            const icon = document.getElementById('sound-icon');
+            const text = document.getElementById('sound-text');
+            if (isSoundMuted) {
+                btn.classList.add('muted');
+                icon.textContent = '🔇';
+                text.textContent = 'เสียง OFF';
+            } else {
+                btn.classList.remove('muted');
+                icon.textContent = '🔊';
+                text.textContent = 'เสียง ON';
+            }
+        }
+
+        function toggleSound() {
+            isSoundMuted = !isSoundMuted;
+            try {
+                localStorage.setItem('mpp_sound_muted', isSoundMuted ? 'true' : 'false');
+            } catch (e) {}
+            updateSoundBtnUI();
+            if (!isSoundMuted) {
+                playClickSound();
+            }
+        }
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
             return audioCtx;
         }
 
+        // Authentic Minecraft Button Click Sound (Wood Snap / Transient)
         function playClickSound() {
-            const ctx = getAudioCtx();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.25, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 0.12);
-        }
+            if (isSoundMuted) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
 
-        function playCopySound() {
-            const ctx = getAudioCtx();
+            const now = ctx.currentTime;
+            
+            // Transient pop
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'triangle';
-            osc.frequency.setValueAtTime(880, ctx.currentTime);
-            osc.frequency.linearRampToValueAtTime(1200, ctx.currentTime + 0.12);
-            gain.gain.setValueAtTime(0.18, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 0.18);
+            osc.frequency.setValueAtTime(120, now);
+            osc.frequency.exponentialRampToValueAtTime(40, now + 0.05);
+
+            gain.gain.setValueAtTime(0.35, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.05);
+
+            // High click snap
+            const snap = ctx.createOscillator();
+            const snapGain = ctx.createGain();
+            snap.type = 'square';
+            snap.frequency.setValueAtTime(1800, now);
+            snap.frequency.exponentialRampToValueAtTime(300, now + 0.02);
+
+            snapGain.gain.setValueAtTime(0.18, now);
+            snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+
+            snap.connect(snapGain);
+            snapGain.connect(ctx.destination);
+            snap.start(now);
+            snap.stop(now + 0.02);
         }
 
-        // เสียงปุ่มโซเชียล
-        document.querySelectorAll('.social-item').forEach(item => {
-            item.addEventListener('click', () => playClickSound());
-        });
+        // Iconic Minecraft XP Orb / Level Up Chime
+        function playXpSound() {
+            if (isSoundMuted) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
 
-        // ===========================
-        // BUG FIX: ใช้ opacity + animation re-trigger แทน display:none
-        // ===========================
-        function switchTab(event, tabId) {
+            const now = ctx.currentTime;
+            const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
+
+            freqs.forEach((freq, idx) => {
+                const noteTime = now + (idx * 0.045);
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, noteTime);
+
+                gain.gain.setValueAtTime(0, noteTime);
+                gain.gain.linearRampToValueAtTime(0.15, noteTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.22);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(noteTime);
+                osc.stop(noteTime + 0.22);
+            });
+        }
+
+        // ==========================================================================
+        // 2. TAB SWITCHING SYSTEM
+        // ==========================================================================
+        function switchTab(evt, tabId) {
             playClickSound();
 
-            // ซ่อนทุก tab
-            document.querySelectorAll('.content-box').forEach(el => {
-                el.classList.remove('active');
-                el.scrollTop = 0;
+            // Deactivate all tab windows
+            document.querySelectorAll('.gui-window').forEach(win => {
+                win.classList.remove('active');
+                win.scrollTop = 0;
             });
 
-            // เปิด active + force re-trigger animation
-            const target = document.getElementById(tabId);
-            // ถอด animation ก่อน 1 frame แล้วใส่ใหม่
-            target.style.animation = 'none';
-            requestAnimationFrame(() => {
-                target.style.animation = '';
-                target.classList.add('active');
-            });
-
-            // ปุ่ม nav
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-        }
-
-        // ===========================
-        // BUG FIX: รองรับทั้ง Clipboard API + fallback ครบถ้วน
-        // ===========================
-        function copyIP(elementId, tooltipId) {
-            playCopySound();
-            const text = document.getElementById(elementId).innerText.trim();
-            const tooltip = document.getElementById(tooltipId);
-
-            const showTooltip = () => {
-                tooltip.classList.add('show');
-                setTimeout(() => tooltip.classList.remove('show'), 2000);
-            };
-
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(showTooltip).catch(fallbackCopy);
-            } else {
-                fallbackCopy();
+            // Activate targeted window with animation restart
+            const targetWin = document.getElementById(tabId);
+            if (targetWin) {
+                targetWin.style.animation = 'none';
+                requestAnimationFrame(() => {
+                    targetWin.style.animation = '';
+                    targetWin.classList.add('active');
+                });
             }
 
-            function fallbackCopy() {
+            // Update button states
+            document.querySelectorAll('.mc-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
+        }
+
+        // ==========================================================================
+        // 3. MINECRAFT TOAST & CLIPBOARD COPY SYSTEM
+        // ==========================================================================
+        let toastTimeout = null;
+
+        function showMinecraftToast(message) {
+            const toast = document.getElementById('mc-toast');
+            const toastMsg = document.getElementById('mc-toast-msg');
+            toastMsg.textContent = message;
+
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2600);
+        }
+
+        function copyToClipboard(text, successMsg) {
+            playXpSound();
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text)
+                    .then(() => showMinecraftToast(successMsg || 'คัดลอกสำเร็จ!'))
+                    .catch(() => fallbackCopy(text, successMsg));
+            } else {
+                fallbackCopy(text, successMsg);
+            }
+
+            function fallbackCopy(str, msg) {
                 const ta = document.createElement('textarea');
-                ta.value = text;
-                ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+                ta.value = str;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                ta.style.top = '0';
+                ta.style.left = '0';
                 document.body.appendChild(ta);
-                ta.focus(); ta.select();
-                try { document.execCommand('copy'); showTooltip(); }
-                catch (e) { console.error('Copy failed', e); }
+                ta.focus();
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    showMinecraftToast(msg || 'คัดลอกสำเร็จ!');
+                } catch (err) {
+                    console.error('Fallback copy failed', err);
+                    showMinecraftToast('ไม่สามารถคัดลอกได้');
+                }
                 document.body.removeChild(ta);
             }
         }
+
+        // ==========================================================================
+        // 4. LIVE MINECRAFT SERVER STATUS (API FETCH)
+        // ==========================================================================
+        const SERVER_HOST = 'zmtbs.qzz.io';
+
+        async function fetchServerStatus(isManual = false) {
+            const refreshIcon = document.getElementById('refresh-icon');
+            const beacon = document.getElementById('server-beacon');
+            const statusText = document.getElementById('server-status-text');
+            const playersText = document.getElementById('server-players');
+            const versionText = document.getElementById('server-version');
+            const motdText = document.getElementById('server-motd');
+
+            if (refreshIcon) refreshIcon.classList.add('spin');
+            if (isManual) playClickSound();
+
+            try {
+                // เรียกข้อมูลผ่าน Minecraft Status API (mcstatus.io v2)
+                const response = await fetch(`https://api.mcstatus.io/v2/status/java/${SERVER_HOST}`, { cache: 'no-cache' });
+                if (!response.ok) throw new Error('API response not ok');
+                const data = await response.json();
+
+                if (data.online) {
+                    beacon.className = 'beacon-dot';
+                    statusText.innerHTML = '<span style="color:#55ff55;">เซิร์ฟเวอร์เปิดให้บริการ (Online)</span>';
+                    
+                    // ดึงจำนวนผู้เล่นรวมทั้งหมด (Competitive + Casual ที่ออนไลน์อยู่)
+                    let totalPlayers = 0;
+                    if (data.players && typeof data.players.online === 'number') {
+                        totalPlayers = data.players.online;
+                    }
+
+                    // หากมีข้อมูล MOTD ตรวจจับตัวเลขผู้เล่นในโหมดต่างๆ มาตรวจสอบยอดรวมให้แม่นยำ
+                    if (data.motd && data.motd.clean) {
+                        const motdStr = data.motd.clean;
+                        const casualMatch = motdStr.match(/Casual:\s*(\d+)/i);
+                        const compMatch = motdStr.match(/Competitive:\s*(\d+)/i);
+                        if (casualMatch && compMatch) {
+                            const parsedTotal = parseInt(casualMatch[1], 10) + parseInt(compMatch[1], 10);
+                            if (parsedTotal > totalPlayers) {
+                                totalPlayers = parsedTotal;
+                            }
+                        }
+                    }
+
+                    playersText.textContent = `${totalPlayers} คน`;
+
+                    if (data.version && data.version.name_clean) {
+                        versionText.textContent = data.version.name_clean;
+                    }
+
+                    if (data.motd && data.motd.clean) {
+                        // ตัด whitespace และบรรทัดว่างให้อ่านง่าย
+                        const cleanMotd = data.motd.clean
+                            .replace(/ᴢᴍᴛʙs\.qzz\.io/gi, 'zmbs.qzz.io')
+                            .replace(/\r/g, '')
+                            .split('\n')
+                            .map(s => s.trim())
+                            .filter(Boolean)
+                            .join(' • ');
+                        motdText.textContent = cleanMotd || 'ยินดีต้อนรับสู่ ZMTBS Server!';
+                    } else {
+                        motdText.textContent = 'ยินดีต้อนรับสู่ ZMTBS Server!';
+                    }
+                } else {
+                    beacon.className = 'beacon-dot offline';
+                    statusText.innerHTML = '<span style="color:#ff5555;"> เซิร์ฟเวอร์ออฟไลน์ (Offline)</span>';
+                    playersText.textContent = '0 คน';
+                    motdText.textContent = 'กำลังปิดปรับปรุงชั่วคราว หรือไม่สามารถเชื่อมต่อได้ในขณะนี้';
+                }
+
+                if (isManual) {
+                    showMinecraftToast('อัปเดตสถานะเซิร์ฟเวอร์เรียบร้อย!');
+                }
+            } catch (err) {
+                console.warn('Minecraft Server API error:', err);
+                beacon.className = 'beacon-dot';
+                statusText.innerHTML = '<span style="color:#55ff55;"> เซิร์ฟเวอร์เปิดให้บริการ</span>';
+                playersText.textContent = 'ออนไลน์';
+                motdText.textContent = 'zmbs.qzz.io | ZMTBS Community';
+                if (isManual) {
+                    showMinecraftToast('ตรวจสอบสถานะเรียบร้อย');
+                }
+            } finally {
+                if (refreshIcon) {
+                    setTimeout(() => refreshIcon.classList.remove('spin'), 500);
+                }
+            }
+        }
+
+        // ==========================================================================
+        // 5. ATMOSPHERIC MINECRAFT PARTICLES (SPORES / GREEN SPARKLES)
+        // ==========================================================================
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animId = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset(true);
+            }
+            reset(initial = false) {
+                this.x = Math.random() * canvas.width;
+                this.y = initial ? Math.random() * canvas.height : canvas.height + 10;
+                this.size = Math.floor(Math.random() * 3) + 2; // Pixel sizes 2-4px
+                this.speedY = -(Math.random() * 0.45 + 0.25);
+                this.speedX = (Math.random() - 0.5) * 0.35;
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.alphaStep = (Math.random() * 0.008) + 0.003;
+                this.hue = Math.random() > 0.4 ? 120 : 45; // Green spore or Gold sparkle
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.alpha -= this.alphaStep;
+                if (this.y < -10 || this.alpha <= 0 || this.x < -10 || this.x > canvas.width + 10) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.hue === 120 
+                    ? `rgba(85, 255, 85, ${this.alpha})`
+                    : `rgba(255, 215, 0, ${this.alpha})`;
+                // Crisp Minecraft Pixel Square
+                ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.size, this.size);
+            }
+        }
+
+        function initParticles() {
+            resizeCanvas();
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 35), 45);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function renderParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            animId = requestAnimationFrame(renderParticles);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // ==========================================================================
+        // 7. INITIALIZATION ON DOM READY
+        // ==========================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSoundBtnUI();
+            initParticles();
+            renderParticles();
+            fetchServerStatus();
+            // Periodic auto-refresh server status every 60 seconds
+            setInterval(() => {
+                fetchServerStatus(false);
+            }, 60000);
+        });
     </script>
 </body>
 </html>
